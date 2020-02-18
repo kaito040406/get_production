@@ -2,6 +2,8 @@ import os, sys, time
 import tkinter as tk
 from tkinter import messagebox
 
+
+
 root = tk.Tk()
 root.title(u"Get Production")
 root.geometry("800x1000")
@@ -12,8 +14,7 @@ def GetValueSearchConditions(event):
   search_number = EditBox3.get()
   try:
     int_search_number = int(search_number)
-    print(search_url)
-    print(search_number)
+  
   except ValueError:
     messagebox.showinfo('エラー', '数字を入力してください')
     EditBox2.delete(0,tk.END)
