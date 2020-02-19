@@ -34,12 +34,15 @@ root.geometry("800x1000")
 root.configure(bg='#CCFFCC')
 
 tree = ttk.Treeview(root)
+style = ttk.Style()
+style.configure("Treeview", font=(None, 13), rowheight=42)
+style.configure("Treeview.Heading", font=(None, 15))
 tree["columns"] = (1,2,3,4)
 tree["show"] = "headings"
 tree.column(1,width=50)
 tree.column(2,width=120)
-tree.column(3,width=330)
-tree.column(4,width=150)
+tree.column(3,width=380)
+tree.column(4,width=100)
 tree.heading(1,text="No.")
 tree.heading(2,text="ASIN")
 tree.heading(3,text="タイトル")
@@ -75,7 +78,10 @@ def GetValueSearchConditions(event):
     """
     p = 1
     for row in c.execute(sql_get):
-      tree.insert("","end",values=(p,row[1],row[3],row[4]))
+      tree.insert("","end", tags=p, values=(p,row[1],row[3],row[4]))
+      if p & 1:
+        tree.tag_configure(p,background="#DDDDDD")
+
       p += 1
     #レコード取得おわり
 

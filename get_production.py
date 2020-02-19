@@ -2,14 +2,9 @@ import requests
 import time
 from bs4 import BeautifulSoup
 from requests_html import HTMLSession
-import os
 import sqlite3
 
 def get_data(url, search_number, dbname):
-  os.remove('production.csv')
-  with open('production.csv', 'a') as f:
-    print("No." + "," +"ASIN" + "," + "url" + "," + "title" + "," + "price" + ",", file=f)
-    f.close()
   k = 1
   num = 0
   check = ""
@@ -32,15 +27,14 @@ def get_data(url, search_number, dbname):
 
     next_page = soup.select(".a-last", recursive=False)
     next_page_url = next_page[0].find("a").get("href")
-    print("次のページ")
+    # print("次のページ")
     url = "https://www.amazon.co.jp/" + next_page_url
     time.sleep(1.0)
 
 
 
-
 def Detail_page(nomber, url, dbname):
-  print(url)
+  # print(url)
   session = HTMLSession()
   d_r = session.get(url)
   d_soup = BeautifulSoup(d_r.content, "html.parser")
@@ -116,11 +110,6 @@ def Detail_page(nomber, url, dbname):
 
 
 def Save_data(number, asin, url, title, price, dbname):
-  with open('production.csv', 'a') as f:  
-    print(str(number) + "," + asin + "," + url + "," + title + "," + price + "," , file=f)
-    print(str(number) + " " + asin + " " + title + " " + price)
-    f.close()
-    
   c = sqlite3.connect(dbname)
   sql_insert = """
   insert into production (asin, url, title, price) values (?, ?, ?, ?);
