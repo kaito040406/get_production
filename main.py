@@ -2,6 +2,7 @@ import os, sys, time
 import tkinter as tk
 from tkinter import messagebox
 import get_production
+import sqlite3
 
 
 root = tk.Tk()
