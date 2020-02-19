@@ -25,8 +25,6 @@ except sqlite3.OperationalError:
   pass
 
 
-
-
 # dbname = "production_data.db"
 root = tk.Tk()
 root.title(u"Get Production")
@@ -37,6 +35,12 @@ def GetValueSearchConditions(event):
   search_url = EditBox2.get()
   search_number = EditBox3.get()
   try:
+    c = sqlite3.connect(dbname)
+    sql_del = """
+    delete from production;
+    """
+    c.execute(sql_del)
+    
     int_search_number = int(search_number)
     search = get_production.get_data(search_url, int_search_number)
     messagebox.showinfo('報告', search)
