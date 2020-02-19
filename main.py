@@ -5,6 +5,29 @@ import get_production
 import sqlite3
 
 
+
+dbname = "production.db"
+c = sqlite3.connect(dbname)
+try:
+  c.execute("PRAGMA foreign_keys = 1")
+  ddl = """
+  CREATE TABLE production
+  (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    asin,
+    url,
+    title,
+    price
+  );
+  """
+  c.execute(ddl)
+except sqlite3.OperationalError:
+  pass
+
+
+
+
+# dbname = "production_data.db"
 root = tk.Tk()
 root.title(u"Get Production")
 root.geometry("800x1000")
