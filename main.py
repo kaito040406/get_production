@@ -1,22 +1,91 @@
 import os, sys, time
 import tkinter as tk
 from tkinter import messagebox
+import tkinter.ttk as ttk
 import get_production
+import sqlite3
 
 
+
+dbname = "production.db"
+c = sqlite3.connect(dbname)
+try:
+  c.execute("PRAGMA foreign_keys = 1")
+  ddl = """
+  CREATE TABLE production
+  (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    asin,
+    url,
+    title,
+    price
+  );
+  """
+  c.execute(ddl)
+  c.close()
+except sqlite3.OperationalError:
+  pass
+
+
+# dbname = "production_data.db"
 root = tk.Tk()
 root.title(u"Get Production")
 root.geometry("800x1000")
 root.configure(bg='#CCFFCC')
 
+tree = ttk.Treeview(root)
+style = ttk.Style()
+style.configure("Treeview", font=(None, 13), rowheight=42)
+style.configure("Treeview.Heading", font=(None, 15))
+tree["columns"] = (1,2,3,4)
+tree["show"] = "headings"
+tree.column(1,width=50)
+tree.column(2,width=120)
+tree.column(3,width=380)
+tree.column(4,width=100)
+tree.heading(1,text="No.")
+tree.heading(2,text="ASIN")
+tree.heading(3,text="タイトル")
+tree.heading(4,text="金額")
+tree.place(x=75, y=270)
+
 def GetValueSearchConditions(event):
   search_url = EditBox2.get()
   search_number = EditBox3.get()
   try:
+
+    # 前回データ取得はじまり
+    c = sqlite3.connect(dbname)
+    sql_del = """
+    delete from production;
+    """
+    c.execute(sql_del)
+    c.commit()
+    c.close()
+    # 前回データ取得はじまり
+
+    # Amazonからデータ取得はじまり
     int_search_number = int(search_number)
-    search = get_production.get_data(search_url, int_search_number)
+    search = get_production.get_data(search_url, int_search_number, dbname)
     messagebox.showinfo('報告', search)
-    
+    # Amazonからデータ取得おわり
+
+
+    #レコード取得はじまり
+    c = sqlite3.connect(dbname)
+    sql_get = """
+    select * from production;
+    """
+    p = 1
+    for row in c.execute(sql_get):
+      tree.insert("","end", tags=p, values=(p,row[1],row[3],row[4]))
+      if p & 1:
+        tree.tag_configure(p,background="#DDDDDD")
+
+      p += 1
+    #レコード取得おわり
+
+
   except ValueError:
     messagebox.showinfo('エラー', '数字を入力してください')
     EditBox2.delete(0,tk.END)
