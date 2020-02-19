@@ -36,6 +36,8 @@ def GetValueSearchConditions(event):
   search_url = EditBox2.get()
   search_number = EditBox3.get()
   try:
+
+    # 前回データ取得はじまり
     c = sqlite3.connect(dbname)
     sql_del = """
     delete from production;
@@ -43,13 +45,25 @@ def GetValueSearchConditions(event):
     c.execute(sql_del)
     c.commit()
     c.close()
+    # 前回データ取得はじまり
 
+    # Amazonからデータ取得はじまり
     int_search_number = int(search_number)
     search = get_production.get_data(search_url, int_search_number, dbname)
     messagebox.showinfo('報告', search)
+    # Amazonからデータ取得おわり
 
-    
-    
+
+    #レコード取得はじまり
+    c = sqlite3.connect(dbname)
+    sql_get = """
+    select * from production;
+    """
+    for row in c.execute(sql_get):
+      print(row)
+    #レコード取得おわり
+
+
   except ValueError:
     messagebox.showinfo('エラー', '数字を入力してください')
     EditBox2.delete(0,tk.END)
