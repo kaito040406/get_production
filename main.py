@@ -21,6 +21,7 @@ try:
   );
   """
   c.execute(ddl)
+  c.close()
 except sqlite3.OperationalError:
   pass
 
@@ -40,10 +41,14 @@ def GetValueSearchConditions(event):
     delete from production;
     """
     c.execute(sql_del)
-    
+    c.commit()
+    c.close()
+
     int_search_number = int(search_number)
-    search = get_production.get_data(search_url, int_search_number)
+    search = get_production.get_data(search_url, int_search_number, dbname)
     messagebox.showinfo('報告', search)
+
+    
     
   except ValueError:
     messagebox.showinfo('エラー', '数字を入力してください')
