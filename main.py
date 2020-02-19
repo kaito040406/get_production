@@ -1,6 +1,7 @@
 import os, sys, time
 import tkinter as tk
 from tkinter import messagebox
+import tkinter.ttk as ttk
 import get_production
 import sqlite3
 
@@ -32,6 +33,19 @@ root.title(u"Get Production")
 root.geometry("800x1000")
 root.configure(bg='#CCFFCC')
 
+tree = ttk.Treeview(root)
+tree["columns"] = (1,2,3,4)
+tree["show"] = "headings"
+tree.column(1,width=50)
+tree.column(2,width=120)
+tree.column(3,width=330)
+tree.column(4,width=150)
+tree.heading(1,text="No.")
+tree.heading(2,text="ASIN")
+tree.heading(3,text="タイトル")
+tree.heading(4,text="金額")
+tree.place(x=75, y=270)
+
 def GetValueSearchConditions(event):
   search_url = EditBox2.get()
   search_number = EditBox3.get()
@@ -59,8 +73,10 @@ def GetValueSearchConditions(event):
     sql_get = """
     select * from production;
     """
+    p = 1
     for row in c.execute(sql_get):
-      print(row)
+      tree.insert("","end",values=(p,row[1],row[3],row[4]))
+      p += 1
     #レコード取得おわり
 
 
