@@ -2,6 +2,41 @@ import requests
 import time
 from bs4 import BeautifulSoup
 from requests_html import HTMLSession
+import os
+
+def get_data(url,search_number):
+  os.remove('production.csv')
+  with open('production.csv', 'a') as f:
+    print("No." + "," +"ASIN" + "," + "url" + "," + "title" + "," + "price" + ",", file=f)
+    f.close()
+  k = 1
+  num = 0
+  check = ""
+  while num == 0: 
+    session = HTMLSession()
+    r = session.get(url)
+    soup = BeautifulSoup(r.content, "html.parser")
+    datas = soup.select(".a-link-normal.a-text-normal", recursive=False)
+    for data in datas:
+      datas2 = data.get("href")
+      page_url = "https://www.amazon.co.jp/"+datas2
+      if page_url != check:
+        print(str(k) + "件目")
+        Detail_page(k ,page_url)
+        time.sleep(2.0)
+        k = k + 1
+      check = page_url 
+      if k == search_number + 1:
+        return "end"
+
+    next_page = soup.select(".a-last", recursive=False)
+    next_page_url = next_page[0].find("a").get("href")
+    print("次のページ")
+    url = "https://www.amazon.co.jp/" + next_page_url
+    time.sleep(1.0)
+
+
+
 
 def Detail_page(nomber ,url):
   print(url)
@@ -38,8 +73,6 @@ def Detail_page(nomber ,url):
     asin = "情報なし"
   #ASIN 終わり  price_inside_buybox
 
-
-
   #タイトル取得 はじまり
   title_box = d_soup.select(".a-size-large#productTitle", recursive=False)
   if len(title_box) == 0:
@@ -51,9 +84,6 @@ def Detail_page(nomber ,url):
   else:
     title = title_box[0].get_text().replace('\n','').replace(' ','').replace(',','')
   #タイトル取得 終わり
-  
-
-
 
   #値段取得 はじまり
   price_box = d_soup.select("#price_inside_buybox", recursive=False)
@@ -74,7 +104,6 @@ def Detail_page(nomber ,url):
   else:
     price = price_box[0].get_text().replace('\n','').replace(' ','').replace('￥','').replace(',','').replace('(税込)','').replace('¥','')
   #値段取得 終わり
-  
 
   with open('production.csv', 'a') as f:  
     print(str(nomber) + "," + asin + "," + url + "," + title + "," + price + "," , file=f)
@@ -82,42 +111,3 @@ def Detail_page(nomber ,url):
     f.close()
   
   time.sleep(0.3)
-    
-
-
-url = "https://www.amazon.co.jp/s?k=%E9%83%A8%E5%93%81&i=electronics&__mk_ja_JP=%E3%82%AB%E3%82%BF%E3%82%AB%E3%83%8A&ref=nb_sb_noss_2"  # チェックワード
-
-with open('production.csv', 'a') as f:
-  print("No." + "," +"ASIN" + "," + "url" + "," + "title" + "," + "price" + ",", file=f)
-  f.close()
-k = 1
-num = 0
-check = ""
-while num == 0: 
-  session = HTMLSession()
-  r = session.get(url)
-  soup = BeautifulSoup(r.content, "html.parser")
-  datas = soup.select(".a-link-normal.a-text-normal", recursive=False)
-  for data in datas:
-    datas2 = data.get("href")
-    page_url = "https://www.amazon.co.jp/"+datas2
-    if page_url != check:
-      print(str(k) + "件目")
-      Detail_page(k ,page_url)
-      time.sleep(2.0)
-      k = k + 1
-    check = page_url 
-  
-  next_page = soup.select(".a-last", recursive=False)
-  next_page_url = next_page[0].find("a").get("href")
-  print("次のページ")
-  url = "https://www.amazon.co.jp/" + next_page_url
-  time.sleep(1.0)
-
-
-
-
-
-
-
- 
