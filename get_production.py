@@ -17,7 +17,7 @@ def get_data(url, search_number, dbname):
       datas2 = data.get("href")
       page_url = "https://www.amazon.co.jp/"+datas2
       if page_url != check:
-        print(str(k) + "件目")
+        # print(str(k) + "件目")
         Detail_page(k, page_url, dbname)
         time.sleep(2.0)
         k = k + 1
