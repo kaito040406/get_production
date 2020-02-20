@@ -1,6 +1,7 @@
 import os, sys, time
 import tkinter as tk
 from tkinter import messagebox
+from tkinter import filedialog
 import tkinter.ttk as ttk
 import get_production
 import sqlite3
@@ -91,6 +92,23 @@ def GetValueSearchConditions(event):
     EditBox2.delete(0,tk.END)
     EditBox3.delete(0,tk.END)
 
+def Export_csv(event):
+  c = sqlite3.connect(dbname)
+  sql_get = """
+  select * from production;
+  """
+
+  root.filename =  filedialog.asksaveasfilename(initialdir = "/",title = "Save as",filetypes =  [("text file","*.csv")])
+  with open(root.filename, 'w') as f:
+    print("no." + "," +"ASIN" + "," + "title" + "," + "price" + "," + "url" + "" , file=f)
+    p = 1
+    for row in c.execute(sql_get):
+      print(str(p) + "," + row[1] + "," + row[3] + "," + row[4] + "," + row[2] + "" , file=f)
+      p += 1
+    f.close()
+
+
+
 Static1 = tk.Label(root, text=u'自動取得アプリ', font=(u'ＭＳ ゴシック', 25))
 Static1.place(x=320, y=10)
 Static1.config(bg='#CCFFCC')
@@ -116,5 +134,9 @@ Button.config(bg='red')
 Button.bind("<Button-1>",GetValueSearchConditions)
 Button.place(x=550, y=190)
 
+Button_export = tk.Button(root, text=u'エクスポート', fg='#333333', height=1, width=10)
+Button_export.config(bg='red')
+Button_export.bind("<Button-1>",Export_csv)
+Button_export.place(x=630, y=740)
 
 root.mainloop()
