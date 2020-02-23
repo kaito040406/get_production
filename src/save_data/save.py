@@ -1,0 +1,33 @@
+
+import sqlite3
+dbname = "production.db"
+
+def Save_title():
+  c = sqlite3.connect(dbname)
+  try:
+    c.execute("PRAGMA foreign_keys = 1")
+    ddl = """
+    CREATE TABLE production
+    (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      asin,
+      url,
+      title,
+      price
+    );
+    """
+    c.execute(ddl)
+    c.close()
+  except sqlite3.OperationalError:
+    pass
+
+
+def Save_data(number, asin, url, title, price, dbname):
+  c = sqlite3.connect(dbname)
+  sql_insert = """
+  insert into production (asin, url, title, price) values (?, ?, ?, ?);
+  """
+  insert_list = (asin, url, title, price)
+  c.execute(sql_insert, insert_list)
+  c.commit()
+  c.close()
