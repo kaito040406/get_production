@@ -22,7 +22,7 @@ def Save_title():
     pass
 
 
-def Save_data(number, asin, url, title, price, dbname):
+def Save_data(number, asin, url, title, price):
   c = sqlite3.connect(dbname)
   sql_insert = """
   insert into production (asin, url, title, price) values (?, ?, ?, ?);

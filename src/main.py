@@ -44,7 +44,7 @@ def GetValueSearchConditions(event):
 
     # Amazonからデータ取得はじまり
     int_search_number = int(search_number)
-    search = get_production.get_data(search_url, int_search_number, dbname)
+    search = get_production.get_data(search_url, int_search_number)
     messagebox.showinfo('報告', search)
     # Amazonからデータ取得おわり
 
