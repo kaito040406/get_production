@@ -19,7 +19,7 @@ def get_data(url, search_number, dbname):
       if page_url != check:
         # print(str(k) + "件目")
         Detail_page(k, page_url, dbname)
-        time.sleep(2.0)
+        time.sleep(0.2)
         k = k + 1
       check = page_url 
       if k == search_number + 1:
@@ -29,7 +29,7 @@ def get_data(url, search_number, dbname):
     next_page_url = next_page[0].find("a").get("href")
     # print("次のページ")
     url = "https://www.amazon.co.jp/" + next_page_url
-    time.sleep(1.0)
+    time.sleep(0.1)
 
 
 
@@ -106,7 +106,7 @@ def Detail_page(nomber, url, dbname):
   #   f.close()
   Save_data(nomber, asin, url, title, price, dbname)
   
-  time.sleep(0.3)
+  time.sleep(0.2)
 
 
 def Save_data(number, asin, url, title, price, dbname):
