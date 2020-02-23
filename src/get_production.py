@@ -2,7 +2,7 @@ import requests
 import time
 from bs4 import BeautifulSoup
 from requests_html import HTMLSession
-import sqlite3
+from save_data import save
 
 def get_data(url, search_number, dbname):
   k = 1
@@ -98,23 +98,7 @@ def Detail_page(nomber, url, dbname):
       price = price_box[0].get_text().replace('\n','').replace(' ','').replace('￥','').replace(',','').replace('(税込)','').replace('¥','')
   else:
     price = price_box[0].get_text().replace('\n','').replace(' ','').replace('￥','').replace(',','').replace('(税込)','').replace('¥','')
-  #値段取得 終わり
 
-  # with open('production.csv', 'a') as f:  
-  #   print(str(nomber) + "," + asin + "," + url + "," + title + "," + price + "," , file=f)
-  #   print(str(nomber) + " " + asin + " " + title + " " + price)
-  #   f.close()
-  Save_data(nomber, asin, url, title, price, dbname)
-  
+
+  save.Save_data(nomber, asin, url, title, price, dbname)
   time.sleep(0.2)
-
-
-def Save_data(number, asin, url, title, price, dbname):
-  c = sqlite3.connect(dbname)
-  sql_insert = """
-  insert into production (asin, url, title, price) values (?, ?, ?, ?);
-  """
-  insert_list = (asin, url, title, price)
-  c.execute(sql_insert, insert_list)
-  c.commit()
-  c.close()

@@ -31,3 +31,21 @@ def Save_data(number, asin, url, title, price, dbname):
   c.execute(sql_insert, insert_list)
   c.commit()
   c.close()
+
+
+def Get_sql():
+  c = sqlite3.connect(dbname)
+  sql_get = """
+  select * from production;
+  """
+  return  c.execute(sql_get)
+
+
+def Delete_data():
+  c = sqlite3.connect(dbname)
+  sql_del = """
+  delete from production;
+  """
+  c.execute(sql_del)
+  c.commit()
+  c.close()

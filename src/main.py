@@ -4,29 +4,12 @@ from tkinter import messagebox
 from tkinter import filedialog
 import tkinter.ttk as ttk
 import get_production
-import sqlite3
+from save_data import save
 
 
 
-dbname = "production.db"
-c = sqlite3.connect(dbname)
-try:
-  c.execute("PRAGMA foreign_keys = 1")
-  ddl = """
-  CREATE TABLE production
-  (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    asin,
-    url,
-    title,
-    price
-  );
-  """
-  c.execute(ddl)
-  c.close()
-except sqlite3.OperationalError:
-  pass
-
+# Save_title
+save.Save_title()
 
 # dbname = "production_data.db"
 root = tk.Tk()
@@ -55,15 +38,9 @@ def GetValueSearchConditions(event):
   search_number = EditBox3.get()
   try:
 
-    # 前回データ取得はじまり
-    c = sqlite3.connect(dbname)
-    sql_del = """
-    delete from production;
-    """
-    c.execute(sql_del)
-    c.commit()
-    c.close()
-    # 前回データ取得はじまり
+    # 前回データ削除はじまり
+    save.Delete_data()
+    # 前回データ削除終わり
 
     # Amazonからデータ取得はじまり
     int_search_number = int(search_number)
@@ -71,38 +48,29 @@ def GetValueSearchConditions(event):
     messagebox.showinfo('報告', search)
     # Amazonからデータ取得おわり
 
-
     #レコード取得はじまり
-    c = sqlite3.connect(dbname)
-    sql_get = """
-    select * from production;
-    """
+    db_datas = save.Get_sql()
     p = 1
-    for row in c.execute(sql_get):
+    for row in db_datas:
       tree.insert("","end", tags=p, values=(p,row[1],row[3],row[4]))
       if p & 1:
         tree.tag_configure(p,background="#DDDDDD")
-
       p += 1
     #レコード取得おわり
-
 
   except ValueError:
     messagebox.showinfo('エラー', '数字を入力してください')
     EditBox2.delete(0,tk.END)
     EditBox3.delete(0,tk.END)
 
-def Export_csv(event):
-  c = sqlite3.connect(dbname)
-  sql_get = """
-  select * from production;
-  """
 
+def Export_csv(event):
+  getting_data =  save.Get_sql()
   root.filename =  filedialog.asksaveasfilename(initialdir = "/",title = "Save as",filetypes =  [("text file","*.csv")])
   with open(root.filename, 'w') as f:
     print("no." + "," +"ASIN" + "," + "title" + "," + "price" + "," + "url" + "" , file=f)
     p = 1
-    for row in c.execute(sql_get):
+    for row in getting_data:
       print(str(p) + "," + row[1] + "," + row[3] + "," + row[4] + "," + row[2] + "" , file=f)
       p += 1
     f.close()
