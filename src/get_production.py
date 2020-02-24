@@ -113,9 +113,8 @@ def Get_price(d_soup):
 
   return price
 
-def Get_image(d_soup):
-  image_box = d_soup.select("#price_inside_buybox", recursive=False)
-  
+
+
 
 
 
