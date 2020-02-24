@@ -3,8 +3,10 @@ import tkinter as tk
 from tkinter import messagebox
 from tkinter import filedialog
 import tkinter.ttk as ttk
-import get_production
+from get_production_data import get_page
 from save_data import save
+import shutil
+
 
 
 
@@ -39,12 +41,19 @@ def GetValueSearchConditions(event):
   try:
 
     # 前回データ削除はじまり
+    tree.delete(*tree.get_children())
+    path = './images'
     save.Delete_data()
+    try:
+      shutil.rmtree(path)
+      os.mkdir(path)
+    except FileNotFoundError:
+      os.mkdir(path)
     # 前回データ削除終わり
 
     # Amazonからデータ取得はじまり
     int_search_number = int(search_number)
-    search = get_production.get_data(search_url, int_search_number)
+    search = get_page.get_data(search_url, int_search_number)
     messagebox.showinfo('報告', search)
     # Amazonからデータ取得おわり
 
@@ -62,6 +71,7 @@ def GetValueSearchConditions(event):
     messagebox.showinfo('エラー', '数字を入力してください')
     EditBox2.delete(0,tk.END)
     EditBox3.delete(0,tk.END)
+
 
 
 def Export_csv(event):
