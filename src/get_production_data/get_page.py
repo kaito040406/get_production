@@ -1,12 +1,14 @@
+import sys
 import requests
 import time
 from bs4 import BeautifulSoup
 from requests_html import HTMLSession
-from get_param import get_asin
-from get_param import get_title
-from get_param import get_price
-from get_param import get_image
-from src.save_data import save
+from .get_param import get_asin
+from .get_param import get_title
+from .get_param import get_price
+from .get_param import get_image
+sys.path.append('../')
+from save_data import save
 
 
 def get_data(url, search_number):
@@ -44,10 +46,22 @@ def Detail_page(nomber, url):
 
   #以下データ取得
   asin = get_asin.Get_asin(d_soup)
-  title = get_title.Get_title(d_soup)
-  price = get_price.Get_price(d_soup)
-  image = get_image.Get_images(d_soup, nomber)
+  if asin == "情報なし":
+    pass
+  else:
+    title = get_title.Get_title(d_soup)
+    if title == "情報なし":
+      pass
+    else:
+      price = get_price.Get_price(d_soup)
+      if price == "情報なし":
+        pass
+      else:
+        image = get_image.Get_images(d_soup, nomber)
+        if image == "情報なし":
+          pass
+        else: 
+          save.Save_data(nomber, asin, url, title, price, image)
   #以上データ取得
-
-  save.Save_data(nomber, asin, url, title, price, image)
+    
   time.sleep(0.2)

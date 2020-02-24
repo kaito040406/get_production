@@ -1,5 +1,9 @@
 
 import sqlite3
+import urllib.error
+import urllib.request
+
+
 dbname = "production.db"
 
 def Save_title():
@@ -26,9 +30,9 @@ def Save_title():
 def Save_data(number, asin, url, title, price, image):
   c = sqlite3.connect(dbname)
   sql_insert = """
-  insert into production (asin, url, title, price, image) values (?, ?, ?, ?, ?);
+  insert into production (asin, url, title, price, image01) values (?, ?, ?, ?, ?);
   """
-  insert_list = (asin, url, title, price)
+  insert_list = (asin, url, title, price, image)
   c.execute(sql_insert, insert_list)
   c.commit()
   c.close()
@@ -50,3 +54,21 @@ def Delete_data():
   c.execute(sql_del)
   c.commit()
   c.close()
+
+
+def Image_download(url, nomber):
+  dst_path = "images/"+ "image" +str(nomber)
+  try:
+    with urllib.request.urlopen(url) as web_file:
+      data = web_file.read()
+      with open(dst_path, mode='wb') as local_file:
+        local_file.write(data)
+    image = "image" +str(nomber)
+    return image
+
+  except urllib.error.URLError as e:
+    print(e)
+    image = "error"
+    return image
+  
+  
