@@ -2,9 +2,9 @@ import requests
 import time
 from bs4 import BeautifulSoup
 from requests_html import HTMLSession
-import sqlite3
+from save_data import save
 
-def get_data(url, search_number, dbname):
+def get_data(url, search_number):
   k = 1
   num = 0
   check = ""
@@ -18,7 +18,7 @@ def get_data(url, search_number, dbname):
       page_url = "https://www.amazon.co.jp/"+datas2
       if page_url != check:
         # print(str(k) + "件目")
-        Detail_page(k, page_url, dbname)
+        Detail_page(k, page_url)
         time.sleep(0.2)
         k = k + 1
       check = page_url 
@@ -29,11 +29,11 @@ def get_data(url, search_number, dbname):
     next_page_url = next_page[0].find("a").get("href")
     # print("次のページ")
     url = "https://www.amazon.co.jp/" + next_page_url
-    time.sleep(0.1)
+    time.sleep(0.5)
 
 
 
-def Detail_page(nomber, url, dbname):
+def Detail_page(nomber, url):
   # print(url)
   session = HTMLSession()
   d_r = session.get(url)
@@ -98,23 +98,7 @@ def Detail_page(nomber, url, dbname):
       price = price_box[0].get_text().replace('\n','').replace(' ','').replace('￥','').replace(',','').replace('(税込)','').replace('¥','')
   else:
     price = price_box[0].get_text().replace('\n','').replace(' ','').replace('￥','').replace(',','').replace('(税込)','').replace('¥','')
-  #値段取得 終わり
 
-  # with open('production.csv', 'a') as f:  
-  #   print(str(nomber) + "," + asin + "," + url + "," + title + "," + price + "," , file=f)
-  #   print(str(nomber) + " " + asin + " " + title + " " + price)
-  #   f.close()
-  Save_data(nomber, asin, url, title, price, dbname)
-  
+
+  save.Save_data(nomber, asin, url, title, price)
   time.sleep(0.2)
-
-
-def Save_data(number, asin, url, title, price, dbname):
-  c = sqlite3.connect(dbname)
-  sql_insert = """
-  insert into production (asin, url, title, price) values (?, ?, ?, ?);
-  """
-  insert_list = (asin, url, title, price)
-  c.execute(sql_insert, insert_list)
-  c.commit()
-  c.close()
