@@ -32,14 +32,22 @@ def get_data(url, search_number):
     time.sleep(0.5)
 
 
-
 def Detail_page(nomber, url):
-  # print(url)
   session = HTMLSession()
   d_r = session.get(url)
   d_soup = BeautifulSoup(d_r.content, "html.parser")
 
-  #ASIN取得 はじまり
+  #以下データ取得
+  asin = Get_asin(d_soup)
+  title = Get_title(d_soup)
+  price = Get_price(d_soup)
+  #以上データ取得
+
+  save.Save_data(nomber, asin, url, title, price)
+  time.sleep(0.2)
+
+
+def Get_asin(d_soup):
   asin = ""
   asin_box = d_soup.select(".pdTab", recursive=False)
   if len(asin_box) == 0:
@@ -66,9 +74,11 @@ def Detail_page(nomber, url):
       l = l + 1
   if asin == "":
     asin = "情報なし"
-  #ASIN 終わり  price_inside_buybox
+  
+  return asin
 
-  #タイトル取得 はじまり
+
+def Get_title(d_soup):
   title_box = d_soup.select(".a-size-large#productTitle", recursive=False)
   if len(title_box) == 0:
     title_box = d_soup.select("#ebooksProductTitle", recursive=False)
@@ -78,9 +88,11 @@ def Detail_page(nomber, url):
       title = title_box[0].get_text().replace('\n','').replace(' ','').replace(',','')
   else:
     title = title_box[0].get_text().replace('\n','').replace(' ','').replace(',','')
-  #タイトル取得 終わり
+  
+  return title
 
-  #値段取得 はじまり
+
+def Get_price(d_soup):
   price_box = d_soup.select("#price_inside_buybox", recursive=False)
   if len(price_box) == 0:
     price_box = d_soup.select(".a-size-medium.a-color-price.offer-price.a-text-normal", recursive=False)
@@ -99,6 +111,11 @@ def Detail_page(nomber, url):
   else:
     price = price_box[0].get_text().replace('\n','').replace(' ','').replace('￥','').replace(',','').replace('(税込)','').replace('¥','')
 
+  return price
 
-  save.Save_data(nomber, asin, url, title, price)
-  time.sleep(0.2)
+def Get_image(d_soup):
+  image_box = d_soup.select("#price_inside_buybox", recursive=False)
+  
+
+
+
