@@ -4,6 +4,9 @@ from bs4 import BeautifulSoup
 from requests_html import HTMLSession
 
 
+image_url = []
+i = 1
+
 session = HTMLSession()
 
 time.sleep(1)
@@ -12,14 +15,13 @@ r = session.get(url)
 d_soup = BeautifulSoup(r.content, "html.parser")
 image_boxs = d_soup.select(".a-dynamic-image#landingImage", recursive=False)
 
-# image_box = image_boxs[0].get("data-old-hires")
-# print(image_boxs)
-# print(len(image_boxs))
-
 for image_box in image_boxs:
-  print("ああああああああああああああああああああああああああ")
-  print(image_box.get("data-a-dynamic-image"))
-  print(len(image_box.get("data-a-dynamic-image")))
-  for image in image_box.get("data-a-dynamic-image"):
-    print(image)
+  for image in image_box.get("data-a-dynamic-image").split('"'):
+    if 'https://' in image:
+      image_url.append(image)
+      print(image)
+      i += 1
+    if i > 3:
+      break
+    time.sleep(0.2)
   time.sleep(0.2)
