@@ -3,8 +3,9 @@ import tkinter as tk
 from tkinter import messagebox
 from tkinter import filedialog
 import tkinter.ttk as ttk
-import get_production
+from get_production_data import get_page
 from save_data import save
+
 
 
 
@@ -44,8 +45,9 @@ def GetValueSearchConditions(event):
 
     # Amazonからデータ取得はじまり
     int_search_number = int(search_number)
-    search = get_production.get_data(search_url, int_search_number)
+    search = get_page.get_data(search_url, int_search_number)
     messagebox.showinfo('報告', search)
+    
     # Amazonからデータ取得おわり
 
     #レコード取得はじまり
