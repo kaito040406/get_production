@@ -78,10 +78,10 @@ def Export_csv(event):
   getting_data =  save.Get_sql()
   root.filename =  filedialog.asksaveasfilename(initialdir = "/",title = "Save as",filetypes =  [("text file","*.csv")])
   with open(root.filename, 'w') as f:
-    print("no." + "," +"ASIN" + "," + "title" + "," + "price" + "," + "url" + "" , file=f)
+    print("no." + "," +"ASIN" + "," + "title" + "," + "price" + "," + "url" + "," +"在庫数" + "", file=f)
     p = 1
     for row in getting_data:
-      print(str(p) + "," + row[1] + "," + row[3] + "," + row[4] + "," + row[2] + "" , file=f)
+      print(str(p) + "," + row[1] + "," + row[3] + "," + row[4] + "," + row[2] + "," + str(row[6]) + "" , file=f)
       p += 1
     f.close()
 

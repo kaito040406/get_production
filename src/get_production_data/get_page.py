@@ -48,22 +48,32 @@ def Detail_page(nomber, url):
   #以下データ取得
   quantity = get_quantity.Get_quantity(d_soup)
   if quantity == 0:
+    print("01")
+    print(url)
     pass
   else:
     asin = get_asin.Get_asin(d_soup)
     if asin == "情報なし":
+      print("02")
+      print(url)
       pass
     else:
       title = get_title.Get_title(d_soup)
       if title == "情報なし":
+        print("03")
+        print(url)
         pass
       else:
         price = get_price.Get_price(d_soup)
         if price == "情報なし":
+          print("04")
+          print(url)
           pass
         else:
           image = get_image.Get_images(d_soup, nomber)
           if image == "情報なし":
+            print("05")
+            print(url)
             pass
           else: 
             save.Save_data(nomber, asin, url, title, price, image, quantity)
