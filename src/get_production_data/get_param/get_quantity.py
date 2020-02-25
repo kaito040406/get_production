@@ -17,7 +17,7 @@ def Get_quantity(d_soup):
         quantity = check_word[2:4]
 
   try:
-    return integer(quantity)
+    return int(quantity)
 
   except NameError:
     quantity_boxs2= d_soup.select(".a-size-medium.a-color-success", recursive=False)

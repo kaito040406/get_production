@@ -53,7 +53,8 @@ def GetValueSearchConditions(event):
 
     # Amazonからデータ取得はじまり
     int_search_number = int(search_number)
-    search = get_page.get_data(search_url, int_search_number)
+    minimum_stock = combo.get()
+    search = get_page.get_data(search_url, int_search_number, minimum_stock)
     messagebox.showinfo('報告', search)
     # Amazonからデータ取得おわり
 
@@ -110,11 +111,20 @@ EditBox3.place(x=230, y=110)
 Button = tk.Button(root, text=u'実行', fg='#333333', height=2, width=10)
 Button.config(bg='red')
 Button.bind("<Button-1>",GetValueSearchConditions)
-Button.place(x=550, y=190)
+Button.place(x=550, y=200)
 
 Button_export = tk.Button(root, text=u'エクスポート', fg='#333333', height=1, width=10)
 Button_export.config(bg='red')
 Button_export.bind("<Button-1>",Export_csv)
 Button_export.place(x=630, y=740)
+
+
+label1 = tk.Label(root, text=u"最低在庫数",font=(u'ＭＳ ゴシック', 18),bg='#CCFFCC')
+label1.place(x=100, y=150)
+
+combo = ttk.Combobox(root, state='readonly',width=6)
+combo["values"] = (1,2,3,4,5,6,7,8,9,10)
+combo.current(4)
+combo.place(x=230, y=150)
 
 root.mainloop()

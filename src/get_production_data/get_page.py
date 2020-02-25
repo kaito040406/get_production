@@ -12,7 +12,7 @@ sys.path.append('../')
 from save_data import save
 
 
-def get_data(url, search_number):
+def get_data(url, search_number, minimum_stock):
   k = 1
   num = 0
   check = ""
@@ -26,7 +26,7 @@ def get_data(url, search_number):
       page_url = "https://www.amazon.co.jp/"+datas2
       if page_url != check:
         # print(str(k) + "件目")
-        Detail_page(k, page_url)
+        Detail_page(k, page_url, minimum_stock)
         time.sleep(0.5)
         k = k + 1
       check = page_url 
@@ -40,14 +40,14 @@ def get_data(url, search_number):
     time.sleep(0.2)
 
 
-def Detail_page(nomber, url):
+def Detail_page(nomber, url ,minimum_stock):
   session = HTMLSession()
   d_r = session.get(url)
   d_soup = BeautifulSoup(d_r.content, "html.parser")
 
   #以下データ取得
   quantity = get_quantity.Get_quantity(d_soup)
-  if quantity == 0:
+  if quantity <= int(minimum_stock):
     print("01")
     print(url)
     pass
