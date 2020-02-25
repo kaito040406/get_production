@@ -18,7 +18,8 @@ def Save_title():
       url,
       title,
       price,
-      image01
+      image01,
+      quentity
     );
     """
     c.execute(ddl)
@@ -27,12 +28,12 @@ def Save_title():
     pass
 
 
-def Save_data(number, asin, url, title, price, image):
+def Save_data(number, asin, url, title, price, image, quentity):
   c = sqlite3.connect(dbname)
   sql_insert = """
-  insert into production (asin, url, title, price, image01) values (?, ?, ?, ?, ?);
+  insert into production (asin, url, title, price, image01, quentity) values (?, ?, ?, ?, ?, ?);
   """
-  insert_list = (asin, url, title, price, image)
+  insert_list = (asin, url, title, price, image, quentity)
   c.execute(sql_insert, insert_list)
   c.commit()
   c.close()

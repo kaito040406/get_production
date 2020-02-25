@@ -15,10 +15,14 @@ def Get_asin(d_soup):
         if 'ASIN' in asin_check_3:
           asin = asin_check_3[6:]
       if asin == "":
-        asin_box_4 = d_soup.select("#detail_bullets_id", recursive=False)[0].find_all("li")
-        for asin_check in asin_box_4:
-          if 'ASIN' in asin_check.get_text():
-            asin = asin_check.get_text()[6:]
+        try:
+          asin_box_4 = d_soup.select("#detail_bullets_id", recursive=False)[0].find_all("li")
+          for asin_check in asin_box_4:
+            if 'ASIN' in asin_check.get_text():
+              asin = asin_check.get_text()[6:]
+        except IndexError:
+          asin = "情報なし"
+        
   elif len(asin_box) == 1:
     asin = asin_box[0].select(".value", recursive=False)[3].get_text()
   else:
