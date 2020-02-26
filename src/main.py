@@ -52,6 +52,8 @@ def GetValueSearchConditions(event):
     # 前回データ削除終わり
 
     # Amazonからデータ取得はじまり
+    print(prime_check)
+
     int_search_number = int(search_number)
     minimum_stock = combo_stock.get()
     search = get_page.get_data(search_url, int_search_number, minimum_stock)
@@ -127,7 +129,10 @@ combo_stock["values"] = (1,2,3,4,5,6,7,8,9,10)
 combo_stock.current(4)
 combo_stock.place(x=230, y=150)
 
-prime_check = tk.Checkbutton(root, text='primeのみ取得',font=(u'ＭＳ ゴシック', 15),bg='#CCFFCC')
+
+prime  = tk.BooleanVar()
+prime.set(True)
+prime_check = tk.Checkbutton(root, variable=prime ,text='primeのみ取得',font=(u'ＭＳ ゴシック', 15),bg='#CCFFCC')
 prime_check.place(x=330, y=150)
 
 root.mainloop()
