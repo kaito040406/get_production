@@ -12,7 +12,7 @@ sys.path.append('../')
 from save_data import save
 
 
-def get_data(url, search_number, minimum_stock):
+def get_data(url, search_number, minimum_stock, prime_check):
   k = 1
   num = 0
   check = ""
@@ -27,8 +27,12 @@ def get_data(url, search_number, minimum_stock):
       page_url = "https://www.amazon.co.jp/"+url
       if page_url != check:
 
-        if len(data.select(".aok-relative.s-icon-text-medium.s-prime", recursive=False)) != 0:
+        if prime_check == True and len(data.select(".aok-relative.s-icon-text-medium.s-prime", recursive=False)) != 0:
           Detail_page(k, page_url, minimum_stock)
+        elif prime_check == False:
+          Detail_page(k, page_url, minimum_stock)
+        else:
+          pass
 
         time.sleep(0.5)
         k = k + 1

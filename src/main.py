@@ -52,11 +52,9 @@ def GetValueSearchConditions(event):
     # 前回データ削除終わり
 
     # Amazonからデータ取得はじまり
-    print(prime_check)
-
     int_search_number = int(search_number)
     minimum_stock = combo_stock.get()
-    search = get_page.get_data(search_url, int_search_number, minimum_stock)
+    search = get_page.get_data(search_url, int_search_number, minimum_stock, prime.get())
     messagebox.showinfo('報告', search)
     # Amazonからデータ取得おわり
 
