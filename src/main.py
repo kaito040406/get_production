@@ -53,8 +53,8 @@ def GetValueSearchConditions(event):
 
     # Amazonからデータ取得はじまり
     int_search_number = int(search_number)
-    minimum_stock = combo.get()
-    search = get_page.get_data(search_url, int_search_number, minimum_stock)
+    minimum_stock = combo_stock.get()
+    search = get_page.get_data(search_url, int_search_number, minimum_stock, prime.get())
     messagebox.showinfo('報告', search)
     # Amazonからデータ取得おわり
 
@@ -122,9 +122,15 @@ Button_export.place(x=630, y=740)
 label1 = tk.Label(root, text=u"最低在庫数",font=(u'ＭＳ ゴシック', 18),bg='#CCFFCC')
 label1.place(x=100, y=150)
 
-combo = ttk.Combobox(root, state='readonly',width=6)
-combo["values"] = (1,2,3,4,5,6,7,8,9,10)
-combo.current(4)
-combo.place(x=230, y=150)
+combo_stock = ttk.Combobox(root, state='readonly',width=6)
+combo_stock["values"] = (1,2,3,4,5,6,7,8,9,10)
+combo_stock.current(4)
+combo_stock.place(x=230, y=150)
+
+
+prime  = tk.BooleanVar()
+prime.set(True)
+prime_check = tk.Checkbutton(root, variable=prime ,text='primeのみ取得',font=(u'ＭＳ ゴシック', 15),bg='#CCFFCC')
+prime_check.place(x=330, y=150)
 
 root.mainloop()
