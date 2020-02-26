@@ -20,13 +20,16 @@ def get_data(url, search_number, minimum_stock):
     session = HTMLSession()
     r = session.get(url)
     soup = BeautifulSoup(r.content, "html.parser")
-    datas = soup.select(".a-link-normal.a-text-normal", recursive=False)
+    datas = soup.select(".a-section.a-spacing-medium", recursive=False)
     for data in datas:
-      datas2 = data.get("href")
-      page_url = "https://www.amazon.co.jp/"+datas2
+      url_datas = data.select(".a-link-normal.a-text-normal", recursive=False)
+      url = url_datas[0].get("href")
+      page_url = "https://www.amazon.co.jp/"+url
       if page_url != check:
-        # print(str(k) + "件目")
-        Detail_page(k, page_url, minimum_stock)
+
+        if len(data.select(".aok-relative.s-icon-text-medium.s-prime", recursive=False)) != 0:
+          Detail_page(k, page_url, minimum_stock)
+
         time.sleep(0.5)
         k = k + 1
       check = page_url 
