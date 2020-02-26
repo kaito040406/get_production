@@ -23,20 +23,24 @@ def get_data(url, search_number, minimum_stock, prime_check):
     datas = soup.select(".a-section.a-spacing-medium", recursive=False)
     for data in datas:
       url_datas = data.select(".a-link-normal.a-text-normal", recursive=False)
-      url = url_datas[0].get("href")
-      page_url = "https://www.amazon.co.jp/"+url
-      if page_url != check:
+      try:
+        url = url_datas[0].get("href")
+        page_url = "https://www.amazon.co.jp/"+url
+        if page_url != check:
 
-        if prime_check == True and len(data.select(".aok-relative.s-icon-text-medium.s-prime", recursive=False)) != 0:
-          Detail_page(k, page_url, minimum_stock)
-        elif prime_check == False:
-          Detail_page(k, page_url, minimum_stock)
-        else:
-          pass
+          if prime_check == True and len(data.select(".aok-relative.s-icon-text-medium.s-prime", recursive=False)) != 0:
+            Detail_page(k, page_url, minimum_stock)
+          elif prime_check == False:
+            Detail_page(k, page_url, minimum_stock)
+          else:
+            pass
 
-        time.sleep(0.5)
-        k = k + 1
-      check = page_url 
+          time.sleep(0.5)
+          k = k + 1
+        check = page_url 
+      except IndexError:
+        pass
+
       if k == search_number + 1:
         return "end"
 
