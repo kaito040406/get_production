@@ -38,12 +38,14 @@ def get_data(url, search_number, minimum_stock, prime_check, minimum_review):
 
           if prime_check == True and len(data.select(".aok-relative.s-icon-text-medium.s-prime", recursive=False)) != 0 and float_review >= float(minimum_review) and stock >= int(minimum_stock):
             Detail_page(k, page_url, minimum_stock)
+            time.sleep(0.3)
           elif prime_check == False and float_review >= float(minimum_review) and stock >= int(minimum_stock):
             Detail_page(k, page_url, minimum_stock)
+            time.sleep(0.3)
           else:
             pass
 
-          time.sleep(0.5)
+          time.sleep(0.2)
           k = k + 1
         check = page_url 
       except IndexError:
