@@ -52,9 +52,7 @@ def GetValueSearchConditions(event):
     # 前回データ削除終わり
 
     # Amazonからデータ取得はじまり
-    int_search_number = int(search_number)
-    minimum_stock = combo_stock.get()
-    search = get_page.get_data(search_url, int_search_number, minimum_stock, prime.get())
+    search = get_page.get_data(search_url, int(search_number), combo_stock.get(), prime.get(), combo_review.get())
     messagebox.showinfo('報告', search)
     # Amazonからデータ取得おわり
 
@@ -126,6 +124,14 @@ combo_stock = ttk.Combobox(root, state='readonly',width=6)
 combo_stock["values"] = (1,2,3,4,5,6,7,8,9,10)
 combo_stock.current(4)
 combo_stock.place(x=230, y=150)
+
+label2 = tk.Label(root, text=u"最低レビュー",font=(u'ＭＳ ゴシック', 18),bg='#CCFFCC')
+label2.place(x=100, y=190)
+
+combo_review = ttk.Combobox(root, state='readonly',width=6)
+combo_review["values"] = (1.0,2.0,3.0,4.0,5.0)
+combo_review.current(2)
+combo_review.place(x=230, y=190)
 
 
 prime  = tk.BooleanVar()
