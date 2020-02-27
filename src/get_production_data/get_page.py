@@ -36,8 +36,6 @@ def get_data(url, search_number, minimum_stock, prime_check, minimum_review, tog
           else:
             buying_together = False
 
-          print(buying_together)
-
           try:
             review = data.select(".a-icon-alt", recursive=False)[0].get_text()[-3:]
             float_review = float(review)
