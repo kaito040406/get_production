@@ -30,6 +30,8 @@ def get_data(url, search_number, minimum_stock, prime_check, minimum_review):
 
           stock = get_quantity.Get_quantity_indexPage(data)
           
+          print(data.select(".a-size-base.s-addon-highlight-color.s-highlighted-text-padding.aok-inline-block"))
+
           try:
             review = data.select(".a-icon-alt", recursive=False)[0].get_text()[-3:]
             float_review = float(review)
