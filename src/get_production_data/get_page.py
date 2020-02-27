@@ -12,7 +12,7 @@ sys.path.append('../')
 from save_data import save
 
 
-def get_data(url, search_number, minimum_stock, prime_check):
+def get_data(url, search_number, minimum_stock, prime_check, minimum_review):
   k = 1
   num = 0
   check = ""
@@ -30,14 +30,13 @@ def get_data(url, search_number, minimum_stock, prime_check):
 
           try:
             review = data.select(".a-icon-alt", recursive=False)[0].get_text()[-3:]
-            int_review = float(review)
+            float_review = float(review)
           except IndexError:
-            int_review = 0.0
+            float_review = 0.0
 
-
-          if prime_check == True and len(data.select(".aok-relative.s-icon-text-medium.s-prime", recursive=False)) != 0 and int_review > 3.0:
+          if prime_check == True and len(data.select(".aok-relative.s-icon-text-medium.s-prime", recursive=False)) != 0 and float_review >= float(minimum_review):
             Detail_page(k, page_url, minimum_stock)
-          elif prime_check == False and int_review > 3.0:
+          elif prime_check == False and float_review >= float(minimum_review):
             Detail_page(k, page_url, minimum_stock)
           else:
             pass
