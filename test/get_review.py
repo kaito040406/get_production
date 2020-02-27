@@ -52,13 +52,16 @@ url = "https://www.amazon.co.jp/%E6%AD%AF%E8%BB%8A%E3%83%91%E3%83%BC%E3%83%84-50
 session = HTMLSession()
 r = session.get(url)
 d_soup = BeautifulSoup(r.content, "html.parser")
-review_boxs = d_soup.select(".a-dynamic-image#landingImage", recursive=False)
+review_boxs = d_soup.select(".a-row.a-size-small", recursive=False)
 # print(image_boxs)
 # print(len(image_boxs))
 # driver.close()
-for review_box in image_boxs:
+for review_box in review_boxs:
+  reviews = d_soup.select(".a-icon-alt", recursive=False)
+  for review in reviews:
+    print(review.get_text())
   # print(image_box)
   # print(image_box.find("img").get("src"))
-  time.sleep(0.5)
+    time.sleep(0.5)
 
 
