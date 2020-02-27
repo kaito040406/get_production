@@ -143,6 +143,6 @@ prime_check.place(x=330, y=150)
 together = tk.BooleanVar()
 together.set(True)
 together_check = tk.Checkbutton(root, variable=prime ,text='合わせ買いブロック',font=(u'ＭＳ ゴシック', 15),bg='#CCFFCC')
-together_check.place(x=530, y=150)
+together_check.place(x=470, y=150)
 
 root.mainloop()
