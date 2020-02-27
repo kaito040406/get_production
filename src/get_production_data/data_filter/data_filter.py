@@ -27,10 +27,8 @@ def Buying_together(data):
       buying_together = True
     else:
       buying_together = False
-
     return buying_together
-
+    
   except IndexError:
     buying_together = False
-
-    
+    return buying_together
