@@ -3,6 +3,7 @@ import requests
 import time
 from bs4 import BeautifulSoup
 from requests_html import HTMLSession
+from .data_filter import data_filter
 from .get_param import get_quantity
 from .get_param import get_asin
 from .get_param import get_title
@@ -28,9 +29,9 @@ def get_data(url, search_number, minimum_stock, prime_check, minimum_review):
         page_url = "https://www.amazon.co.jp/"+url
         if page_url != check:
 
-          stock = get_quantity.Get_quantity_indexPage(data)
+          stock = data_filter.Get_quantity_indexPage(data)
           
-          print(data.select(".a-size-base.s-addon-highlight-color.s-highlighted-text-padding.aok-inline-block"))
+          buying_together = data_filter.Buying_together(data)
 
           try:
             review = data.select(".a-icon-alt", recursive=False)[0].get_text()[-3:]
