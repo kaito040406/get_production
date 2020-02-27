@@ -28,9 +28,16 @@ def get_data(url, search_number, minimum_stock, prime_check):
         page_url = "https://www.amazon.co.jp/"+url
         if page_url != check:
 
-          if prime_check == True and len(data.select(".aok-relative.s-icon-text-medium.s-prime", recursive=False)) != 0:
+          try:
+            review = data.select(".a-icon-alt", recursive=False)[0].get_text()[-3:]
+            int_review = float(review)
+          except IndexError:
+            int_review = 0.0
+
+
+          if prime_check == True and len(data.select(".aok-relative.s-icon-text-medium.s-prime", recursive=False)) != 0 and int_review > 3.0:
             Detail_page(k, page_url, minimum_stock)
-          elif prime_check == False:
+          elif prime_check == False and int_review > 3.0:
             Detail_page(k, page_url, minimum_stock)
           else:
             pass
