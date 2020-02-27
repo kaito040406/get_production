@@ -20,7 +20,7 @@ def get_data(url, search_number, minimum_stock, prime_check, minimum_review):
     session = HTMLSession()
     r = session.get(url)
     soup = BeautifulSoup(r.content, "html.parser")
-    datas = soup.select(".a-section.a-spacing-medium", recursive=False)
+    datas = soup.select(".s-expand-height.s-include-content-margin.s-border-bottom", recursive=False)
     for data in datas:
       url_datas = data.select(".a-link-normal.a-text-normal", recursive=False)
       try:
@@ -28,15 +28,17 @@ def get_data(url, search_number, minimum_stock, prime_check, minimum_review):
         page_url = "https://www.amazon.co.jp/"+url
         if page_url != check:
 
+          stock = get_quantity.Get_quantity_indexPage(data)
+          
           try:
             review = data.select(".a-icon-alt", recursive=False)[0].get_text()[-3:]
             float_review = float(review)
           except IndexError:
             float_review = 0.0
 
-          if prime_check == True and len(data.select(".aok-relative.s-icon-text-medium.s-prime", recursive=False)) != 0 and float_review >= float(minimum_review):
+          if prime_check == True and len(data.select(".aok-relative.s-icon-text-medium.s-prime", recursive=False)) != 0 and float_review >= float(minimum_review) and stock >= int(minimum_stock):
             Detail_page(k, page_url, minimum_stock)
-          elif prime_check == False and float_review >= float(minimum_review):
+          elif prime_check == False and float_review >= float(minimum_review) and stock >= int(minimum_stock):
             Detail_page(k, page_url, minimum_stock)
           else:
             pass
