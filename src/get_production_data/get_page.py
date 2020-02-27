@@ -13,7 +13,7 @@ sys.path.append('../')
 from save_data import save
 
 
-def get_data(url, search_number, minimum_stock, prime_check, minimum_review):
+def get_data(url, search_number, minimum_stock, prime_check, minimum_review, together_check):
   k = 1
   num = 0
   check = ""
@@ -31,7 +31,10 @@ def get_data(url, search_number, minimum_stock, prime_check, minimum_review):
 
           stock = data_filter.Get_quantity_indexPage(data)
           
-          buying_together = data_filter.Buying_together(data)
+          if together_check == True:
+            buying_together = data_filter.Buying_together(data)
+          else:
+            buying_together = False
 
           try:
             review = data.select(".a-icon-alt", recursive=False)[0].get_text()[-3:]
@@ -39,10 +42,10 @@ def get_data(url, search_number, minimum_stock, prime_check, minimum_review):
           except IndexError:
             float_review = 0.0
 
-          if prime_check == True and len(data.select(".aok-relative.s-icon-text-medium.s-prime", recursive=False)) != 0 and float_review >= float(minimum_review) and stock >= int(minimum_stock):
+          if prime_check == True and len(data.select(".aok-relative.s-icon-text-medium.s-prime", recursive=False)) != 0 and float_review >= float(minimum_review) and stock >= int(minimum_stock) and buying_together == False:
             Detail_page(k, page_url, minimum_stock)
             time.sleep(0.3)
-          elif prime_check == False and float_review >= float(minimum_review) and stock >= int(minimum_stock):
+          elif prime_check == False and float_review >= float(minimum_review) and stock >= int(minimum_stock), buying_together == False:
             Detail_page(k, page_url, minimum_stock)
             time.sleep(0.3)
           else:

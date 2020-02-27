@@ -33,4 +33,4 @@ def Buying_together(data):
   except IndexError:
     buying_together = False
 
-    return buying_together
+    
