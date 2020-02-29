@@ -60,11 +60,15 @@ def get_data(url, search_number, minimum_stock, prime_check, minimum_review, tog
       if k == search_number + 1:
         return "end"
 
-    next_page = soup.select(".a-last", recursive=False)
-    next_page_url = next_page[0].find("a").get("href")
-    # print("次のページ")
-    url = "https://www.amazon.co.jp/" + next_page_url
-    time.sleep(0.2)
+    try:
+      next_page = soup.select(".a-last", recursive=False)
+      next_page_url = next_page[0].find("a").get("href")
+      # print("次のページ")
+      url = "https://www.amazon.co.jp/" + next_page_url
+      time.sleep(0.2)
+    except AttributeError:
+      return "end"
+      
 
 
 def Detail_page(nomber, url ,minimum_stock):
