@@ -51,8 +51,9 @@ def GetValueSearchConditions(event):
   element.send_keys(search_word)
   element.submit()
   search_url = driver.current_url
-  time.sleep(1)
+  time.sleep(0.5)
   driver.quit()
+  time.sleep(0.5)
   # ブラウザ操作
 
   search_number = EditBox3.get()
