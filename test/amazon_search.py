@@ -4,7 +4,12 @@ from tkinter import messagebox
 from tkinter import filedialog
 import tkinter.ttk as ttk
 import shutil
+import time
 from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
+import chromedriver_binary
+
+
 
 
 root = tk.Tk()
@@ -30,7 +35,20 @@ tree.place(x=75, y=270)
 
 
 def GetValueSearchConditions(event):
+  options = Options()
+  driver = webdriver.Chrome(chrome_options=options)
+  url = "https://www.google.co.jp/"
+  driver.get(url)
   search_url = EditBox2.get()
+  time.sleep(3)
+  element = driver.find_element_by_class_name("gLFyf")
+  print(driver.find_element_by_class_name("gLFyf"))
+  element.send_keys(search_url)
+  element.submit()
+  time.sleep(3)
+  cur_url = driver.current_url
+  print(cur_url)
+  driver.quit()
 
 
 Static1 = tk.Label(root, text=u'自動取得アプリ', font=(u'ＭＳ ゴシック', 25))
