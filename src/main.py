@@ -7,6 +7,8 @@ from get_production_data import get_page
 from save_data import save
 import shutil
 from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
+import chromedriver_binary
 
 
 
@@ -37,7 +39,22 @@ tree.heading(4,text="金額")
 tree.place(x=75, y=270)
 
 def GetValueSearchConditions(event):
-  search_url = EditBox2.get()
+
+  # ブラウザ操作
+  options = Options()
+  driver = webdriver.Chrome(chrome_options=options)
+  url = "https://www.amazon.co.jp/"
+  driver.get(url)
+  search_word = EditBox2.get()
+  time.sleep(3)
+  element = driver.find_element_by_id("twotabsearchtextbox")
+  element.send_keys(search_word)
+  element.submit()
+  search_url = driver.current_url
+  time.sleep(1)
+  driver.quit()
+  # ブラウザ操作
+
   search_number = EditBox3.get()
   try:
 
