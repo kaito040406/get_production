@@ -6,6 +6,9 @@ import tkinter.ttk as ttk
 from get_production_data import get_page
 from save_data import save
 import shutil
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
+import chromedriver_binary
 
 
 
@@ -36,7 +39,23 @@ tree.heading(4,text="金額")
 tree.place(x=75, y=270)
 
 def GetValueSearchConditions(event):
-  search_url = EditBox2.get()
+
+  # ブラウザ操作
+  options = Options()
+  driver = webdriver.Chrome(chrome_options=options)
+  url = "https://www.amazon.co.jp/"
+  driver.get(url)
+  search_word = EditBox2.get()
+  time.sleep(3)
+  element = driver.find_element_by_id("twotabsearchtextbox")
+  element.send_keys(search_word)
+  element.submit()
+  search_url = driver.current_url
+  time.sleep(0.5)
+  driver.quit()
+  time.sleep(0.5)
+  # ブラウザ操作
+
   search_number = EditBox3.get()
   try:
 
@@ -90,7 +109,7 @@ Static1 = tk.Label(root, text=u'自動取得アプリ', font=(u'ＭＳ ゴシッ
 Static1.place(x=320, y=10)
 Static1.config(bg='#CCFFCC')
 
-Static2 = tk.Label(root, text=u'商品検索URL', font=(u'ＭＳ ゴシック', 18))
+Static2 = tk.Label(root, text=u'検索ワード', font=(u'ＭＳ ゴシック', 18))
 Static2.place(x=100, y=70)
 Static2.config(bg='#CCFFCC')
 
