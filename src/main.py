@@ -6,6 +6,7 @@ import tkinter.ttk as ttk
 from get_production_data import get_page
 from save_data import save
 import shutil
+from selenium import webdriver
 
 
 
