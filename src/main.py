@@ -108,7 +108,7 @@ Static1 = tk.Label(root, text=u'自動取得アプリ', font=(u'ＭＳ ゴシッ
 Static1.place(x=320, y=10)
 Static1.config(bg='#CCFFCC')
 
-Static2 = tk.Label(root, text=u'商品検索URL', font=(u'ＭＳ ゴシック', 18))
+Static2 = tk.Label(root, text=u'検索ワード', font=(u'ＭＳ ゴシック', 18))
 Static2.place(x=100, y=70)
 Static2.config(bg='#CCFFCC')
 
