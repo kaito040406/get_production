@@ -37,12 +37,11 @@ tree.place(x=75, y=270)
 def GetValueSearchConditions(event):
   options = Options()
   driver = webdriver.Chrome(chrome_options=options)
-  url = "https://www.google.co.jp/"
+  url = "https://www.amazon.co.jp/"
   driver.get(url)
   search_url = EditBox2.get()
   time.sleep(3)
-  element = driver.find_element_by_class_name("gLFyf")
-  print(driver.find_element_by_class_name("gLFyf"))
+  element = driver.find_element_by_id("twotabsearchtextbox")
   element.send_keys(search_url)
   element.submit()
   time.sleep(3)
