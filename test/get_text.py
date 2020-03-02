@@ -8,14 +8,10 @@ url = "https://www.amazon.co.jp/%E8%85%95%E6%99%82%E8%A8%88%E3%83%99%E3%83%AB%E3
 session = HTMLSession()
 r = session.get(url)
 d_soup = BeautifulSoup(r.content, "html.parser")
-review_boxs = d_soup.select(".a-color-price", recursive=False)
-# print(image_boxs)
-# print(len(image_boxs))
-# driver.close()
+review_boxs = d_soup.select(".a-unordered-list.a-vertical.a-spacing-none", recursive=False)
 for review_box in review_boxs:
-  if "残り" in review_box.get_text():
-    if '点' in review_box.get_text()[3]:
-      print(review_box.get_text()[2])
-    else:
-      print(review_box.get_text()[2:4])
-  time.sleep(0.1)
+  row_text = review_box.get_text().replace('\n','').replace(' ','')
+  row_texts = row_text.split('。')
+  for row_text in row_texts:
+    print(row_text.replace('\t',''))
+    time.sleep(0.2)
