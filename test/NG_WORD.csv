@@ -107,3 +107,7 @@ ARC'TERYX,,,サーポート
 ,,,弊店
 ,,,Email
 ,,,連絡お願い
+,,,以下に適合します： .
+,,,モデル番号を入力してください
+,,,これが適合するか確認：
+,,,P.when("ReplacementPartsBulletLoader").execute(function(module){module.initializeDPX();})
