@@ -10,13 +10,7 @@ ng_words = []
 i = 0
 texts = ""
 
-with open('NG_WORD.csv') as f:
-  reader = csv.reader(f)
-  print(reader)
-  for row in reader:
-    ng_words.append([row[0],row[1],row[2],row[3]])
-    i = i + 1
-  f.close()
+
 
 k = 0
 session = HTMLSession()

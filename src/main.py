@@ -9,34 +9,8 @@ import shutil
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 import chromedriver_binary
+import csv
 
-
-
-
-# Save_title
-save.Save_title()
-
-# dbname = "production_data.db"
-root = tk.Tk()
-root.title(u"Get Production")
-root.geometry("800x1000")
-root.configure(bg='#CCFFCC')
-
-tree = ttk.Treeview(root)
-style = ttk.Style()
-style.configure("Treeview", font=(None, 13), rowheight=42)
-style.configure("Treeview.Heading", font=(None, 15))
-tree["columns"] = (1,2,3,4)
-tree["show"] = "headings"
-tree.column(1,width=50)
-tree.column(2,width=120)
-tree.column(3,width=380)
-tree.column(4,width=100)
-tree.heading(1,text="No.")
-tree.heading(2,text="ASIN")
-tree.heading(3,text="タイトル")
-tree.heading(4,text="金額")
-tree.place(x=75, y=270)
 
 def GetValueSearchConditions(event):
 
@@ -56,6 +30,18 @@ def GetValueSearchConditions(event):
   time.sleep(0.5)
   # ブラウザ操作
 
+
+  # NGワード読み込みはじまり
+  ng_words = []
+  with open('NG_WORD.csv') as f:
+    reader = csv.reader(f)
+    print(reader)
+    for row in reader:
+      ng_words.append([row[0],row[1],row[2],row[3]])
+      i = i + 1
+  f.close()
+  # NGワード読み込みおわり
+
   search_number = EditBox3.get()
   try:
 
@@ -71,7 +57,7 @@ def GetValueSearchConditions(event):
     # 前回データ削除終わり
 
     # Amazonからデータ取得はじまり
-    search = get_page.get_data(search_url, int(search_number), combo_stock.get(), prime.get(), combo_review.get(), together.get())
+    search = get_page.get_data(search_url, int(search_number), combo_stock.get(), prime.get(), combo_review.get(), together.get(), ng_words)
     messagebox.showinfo('報告', search)
     # Amazonからデータ取得おわり
 
@@ -103,6 +89,32 @@ def Export_csv(event):
       p += 1
     f.close()
 
+
+
+# Save_title
+save.Save_title()
+
+# dbname = "production_data.db"
+root = tk.Tk()
+root.title(u"Get Production")
+root.geometry("800x1000")
+root.configure(bg='#CCFFCC')
+
+tree = ttk.Treeview(root)
+style = ttk.Style()
+style.configure("Treeview", font=(None, 13), rowheight=42)
+style.configure("Treeview.Heading", font=(None, 15))
+tree["columns"] = (1,2,3,4)
+tree["show"] = "headings"
+tree.column(1,width=50)
+tree.column(2,width=120)
+tree.column(3,width=380)
+tree.column(4,width=100)
+tree.heading(1,text="No.")
+tree.heading(2,text="ASIN")
+tree.heading(3,text="タイトル")
+tree.heading(4,text="金額")
+tree.place(x=75, y=270)
 
 
 Static1 = tk.Label(root, text=u'自動取得アプリ', font=(u'ＭＳ ゴシック', 25))
