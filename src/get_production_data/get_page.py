@@ -9,6 +9,7 @@ from .get_param import get_asin
 from .get_param import get_title
 from .get_param import get_price
 from .get_param import get_image
+from .get_param import get_text
 sys.path.append('../')
 from save_data import save
 
