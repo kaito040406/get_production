@@ -9,11 +9,12 @@ from .get_param import get_asin
 from .get_param import get_title
 from .get_param import get_price
 from .get_param import get_image
+from .get_param import get_text
 sys.path.append('../')
 from save_data import save
 
 
-def get_data(url, search_number, minimum_stock, prime_check, minimum_review, together_check):
+def get_data(url, search_number, minimum_stock, prime_check, minimum_review, together_check, *ng_text):
   k = 1
   num = 0
   check = ""
@@ -43,10 +44,10 @@ def get_data(url, search_number, minimum_stock, prime_check, minimum_review, tog
             float_review = 0.0
 
           if prime_check == True and len(data.select(".aok-relative.s-icon-text-medium.s-prime", recursive=False)) != 0 and float_review >= float(minimum_review) and stock >= int(minimum_stock) and buying_together == False:
-            Detail_page(k, page_url, minimum_stock)
+            Detail_page(k, page_url, minimum_stock, *ng_text)
             time.sleep(0.3)
           elif prime_check == False and float_review >= float(minimum_review) and stock >= int(minimum_stock) and buying_together == False:
-            Detail_page(k, page_url, minimum_stock)
+            Detail_page(k, page_url, minimum_stock, *ng_text)
             time.sleep(0.3)
           else:
             pass
@@ -71,7 +72,7 @@ def get_data(url, search_number, minimum_stock, prime_check, minimum_review, tog
       
 
 
-def Detail_page(nomber, url ,minimum_stock):
+def Detail_page(nomber, url ,minimum_stock, *ng_text):
   session = HTMLSession()
   d_r = session.get(url)
   d_soup = BeautifulSoup(d_r.content, "html.parser")
@@ -107,7 +108,13 @@ def Detail_page(nomber, url ,minimum_stock):
             print(url)
             pass
           else: 
-            save.Save_data(nomber, asin, url, title, price, image, quantity)
+            text = get_text.Get_text(d_soup, *ng_text)
+            if text == "情報なし":
+              print("06")
+              print(url)
+              pass
+            else:
+              save.Save_data(nomber, asin, url, title, price, image, quantity, text)
   #以上データ取得
     
   time.sleep(0.2)

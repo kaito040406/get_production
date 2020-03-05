@@ -9,7 +9,87 @@ import shutil
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 import chromedriver_binary
+import csv
 
+
+def GetValueSearchConditions(event):
+
+  # ブラウザ操作
+  options = Options()
+  driver = webdriver.Chrome(chrome_options=options)
+  url = "https://www.amazon.co.jp/"
+  driver.get(url)
+  search_word = EditBox2.get()
+  time.sleep(3)
+  element = driver.find_element_by_id("twotabsearchtextbox")
+  element.send_keys(search_word)
+  element.submit()
+  search_url = driver.current_url
+  time.sleep(0.5)
+  driver.quit()
+  time.sleep(0.5)
+  # ブラウザ操作
+
+
+  # NGワード読み込みはじまり
+  title_validation = [] 
+  text_validation = []
+  with open('NG_WORD.csv') as f:
+    reader = csv.reader(f)
+    for row in reader:
+      if row[0] != "":
+        title_validation.append(row[0])
+      if row[3] != "":
+        text_validation.append(row[3])
+  f.close()
+  # NGワード読み込みおわり
+
+  search_number = EditBox3.get()
+  try:
+
+    # 前回データ削除はじまり
+    tree.delete(*tree.get_children())
+    path = './images'
+    save.Delete_data()
+    try:
+      shutil.rmtree(path)
+      os.mkdir(path)
+    except FileNotFoundError:
+      os.mkdir(path)
+    # 前回データ削除終わり
+
+    # Amazonからデータ取得はじまり
+    search = get_page.get_data(search_url, int(search_number), combo_stock.get(), prime.get(), combo_review.get(), together.get(), *text_validation)
+    messagebox.showinfo('報告', search)
+    # Amazonからデータ取得おわり
+
+    #レコード取得はじまり
+    db_datas = save.Get_sql()
+    p = 1
+    for row in db_datas:
+      tree.insert("","end", tags=p, values=(p,row[1],row[3],row[4]))
+      if p & 1:
+        tree.tag_configure(p,background="#DDDDDD")
+      p += 1
+    #レコード取得おわり
+
+  except ValueError:
+    messagebox.showinfo('エラー', '数字を入力してください')
+    EditBox2.delete(0,tk.END)
+    EditBox3.delete(0,tk.END)
+
+
+
+def Export_csv(event):
+  getting_data =  save.Get_sql()
+  root.filename =  filedialog.asksaveasfilename(initialdir = "/",title = "Save as",filetypes =  [("text file","*.csv")])
+  with open(root.filename, 'w') as f:
+    print("no." + "," +"ASIN" + "," + "title" + "," + "price" + "," + "url" + "," +"在庫数" + "," + "説明", file=f)
+    p = 1
+    for row in getting_data:
+      print(str(p) + "," + row[1] + "," + row[3] + "," + row[4] + "," + row[2] + "," + str(row[6]) + "," + row[7] , file=f)
+      p += 1
+    f.close()
 
 
 
@@ -37,72 +117,6 @@ tree.heading(2,text="ASIN")
 tree.heading(3,text="タイトル")
 tree.heading(4,text="金額")
 tree.place(x=75, y=270)
-
-def GetValueSearchConditions(event):
-
-  # ブラウザ操作
-  options = Options()
-  driver = webdriver.Chrome(chrome_options=options)
-  url = "https://www.amazon.co.jp/"
-  driver.get(url)
-  search_word = EditBox2.get()
-  time.sleep(3)
-  element = driver.find_element_by_id("twotabsearchtextbox")
-  element.send_keys(search_word)
-  element.submit()
-  search_url = driver.current_url
-  time.sleep(0.5)
-  driver.quit()
-  time.sleep(0.5)
-  # ブラウザ操作
-
-  search_number = EditBox3.get()
-  try:
-
-    # 前回データ削除はじまり
-    tree.delete(*tree.get_children())
-    path = './images'
-    save.Delete_data()
-    try:
-      shutil.rmtree(path)
-      os.mkdir(path)
-    except FileNotFoundError:
-      os.mkdir(path)
-    # 前回データ削除終わり
-
-    # Amazonからデータ取得はじまり
-    search = get_page.get_data(search_url, int(search_number), combo_stock.get(), prime.get(), combo_review.get(), together.get())
-    messagebox.showinfo('報告', search)
-    # Amazonからデータ取得おわり
-
-    #レコード取得はじまり
-    db_datas = save.Get_sql()
-    p = 1
-    for row in db_datas:
-      tree.insert("","end", tags=p, values=(p,row[1],row[3],row[4]))
-      if p & 1:
-        tree.tag_configure(p,background="#DDDDDD")
-      p += 1
-    #レコード取得おわり
-
-  except ValueError:
-    messagebox.showinfo('エラー', '数字を入力してください')
-    EditBox2.delete(0,tk.END)
-    EditBox3.delete(0,tk.END)
-
-
-
-def Export_csv(event):
-  getting_data =  save.Get_sql()
-  root.filename =  filedialog.asksaveasfilename(initialdir = "/",title = "Save as",filetypes =  [("text file","*.csv")])
-  with open(root.filename, 'w') as f:
-    print("no." + "," +"ASIN" + "," + "title" + "," + "price" + "," + "url" + "," +"在庫数" + "", file=f)
-    p = 1
-    for row in getting_data:
-      print(str(p) + "," + row[1] + "," + row[3] + "," + row[4] + "," + row[2] + "," + str(row[6]) + "" , file=f)
-      p += 1
-    f.close()
-
 
 
 Static1 = tk.Label(root, text=u'自動取得アプリ', font=(u'ＭＳ ゴシック', 25))
