@@ -14,7 +14,7 @@ sys.path.append('../')
 from save_data import save
 
 
-def get_data(url, search_number, minimum_stock, prime_check, minimum_review, together_check, *ng_text, *ng_title):
+def get_data(url, search_number, minimum_stock, prime_check, minimum_review, together_check, *ng_word):
   k = 1
   num = 0
   check = ""
@@ -47,10 +47,10 @@ def get_data(url, search_number, minimum_stock, prime_check, minimum_review, tog
           print(index_title)
 
           if prime_check == True and len(data.select(".aok-relative.s-icon-text-medium.s-prime", recursive=False)) != 0 and float_review >= float(minimum_review) and stock >= int(minimum_stock) and buying_together == False:
-            Detail_page(k, page_url, minimum_stock, *ng_text)
+            Detail_page(k, page_url, minimum_stock, *ng_word[3])
             time.sleep(0.3)
           elif prime_check == False and float_review >= float(minimum_review) and stock >= int(minimum_stock) and buying_together == False:
-            Detail_page(k, page_url, minimum_stock, *ng_text)
+            Detail_page(k, page_url, minimum_stock, *ng_word[3])
             time.sleep(0.3)
           else:
             pass

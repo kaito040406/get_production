@@ -31,17 +31,32 @@ def GetValueSearchConditions(event):
   # ブラウザ操作
 
 
-  # NGワード読み込みはじまり
+  # NGワード読み込みはじまり クソコード
   title_validation = [] 
   text_validation = []
+  title_space = []
+  title_delete = []
+  ng_word = []
   with open('NG_WORD.csv') as f:
     reader = csv.reader(f)
     for row in reader:
       if row[0] != "":
         title_validation.append(row[0])
+      if row[1] != "":
+        title_space.append(row[1])
+      if row[2] != "":
+        title_delete.append(row[2])
       if row[3] != "":
         text_validation.append(row[3])
   f.close()
+  ng_word.append(title_validation)
+  ng_word.append(title_space)
+  ng_word.append(title_delete)
+  ng_word.append(text_validation)
+  # title_validation_num = len(title_validation)
+  # title_space_num = len(title_space)
+  # title_delete = len(title_delete)
+  # text_validation_count = len(text_validation)
   # NGワード読み込みおわり
 
   search_number = EditBox3.get()
@@ -59,7 +74,7 @@ def GetValueSearchConditions(event):
     # 前回データ削除終わり
 
     # Amazonからデータ取得はじまり
-    search = get_page.get_data(search_url, int(search_number), combo_stock.get(), prime.get(), combo_review.get(), together.get(), *text_validation, *title_validation)
+    search = get_page.get_data(search_url, int(search_number), combo_stock.get(), prime.get(), combo_review.get(), together.get(), *ng_word)
     messagebox.showinfo('報告', search)
     # Amazonからデータ取得おわり
 
