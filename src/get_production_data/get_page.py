@@ -55,10 +55,10 @@ def get_data(url, search_number, minimum_stock, prime_check, minimum_review, tog
             title_path = True
 
           if prime_check == True and len(data.select(".aok-relative.s-icon-text-medium.s-prime", recursive=False)) != 0 and float_review >= float(minimum_review) and stock >= int(minimum_stock) and buying_together == False and title_path == True:
-            Detail_page(k, page_url, minimum_stock, *ng_word[3])
+            Detail_page(k, page_url, minimum_stock, *ng_word)
             time.sleep(0.3)
           elif prime_check == False and float_review >= float(minimum_review) and stock >= int(minimum_stock) and buying_together == False and title_path == True:
-            Detail_page(k, page_url, minimum_stock, *ng_word[3])
+            Detail_page(k, page_url, minimum_stock, *ng_word)
             time.sleep(0.3)
           else:
             pass
@@ -83,7 +83,7 @@ def get_data(url, search_number, minimum_stock, prime_check, minimum_review, tog
       
 
 
-def Detail_page(nomber, url ,minimum_stock, *ng_text):
+def Detail_page(nomber, url ,minimum_stock, *ng_word):
   session = HTMLSession()
   d_r = session.get(url)
   d_soup = BeautifulSoup(d_r.content, "html.parser")
@@ -101,7 +101,7 @@ def Detail_page(nomber, url ,minimum_stock, *ng_text):
       print(url)
       pass
     else:
-      title = get_title.Get_title(d_soup)
+      title = get_title.Get_title(d_soup, *ng_word)
       if title == "情報なし":
         print("03")
         print(url)
@@ -119,7 +119,7 @@ def Detail_page(nomber, url ,minimum_stock, *ng_text):
             print(url)
             pass
           else: 
-            text = get_text.Get_text(d_soup, *ng_text)
+            text = get_text.Get_text(d_soup, *ng_word[3])
             if text == "情報なし":
               print("06")
               print(url)
