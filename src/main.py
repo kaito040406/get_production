@@ -31,52 +31,67 @@ def GetValueSearchConditions(event):
   # ブラウザ操作
 
 
-  # NGワード読み込みはじまり
+  # NGワード読み込みはじまり クソコード
   title_validation = [] 
   text_validation = []
+  title_space = []
+  title_delete = []
+  ng_word = []
   with open('NG_WORD.csv') as f:
     reader = csv.reader(f)
     for row in reader:
       if row[0] != "":
         title_validation.append(row[0])
+      if row[1] != "":
+        title_space.append(row[1])
+      if row[2] != "":
+        title_delete.append(row[2])
       if row[3] != "":
         text_validation.append(row[3])
   f.close()
+  ng_word.append(title_validation)
+  ng_word.append(title_space)
+  ng_word.append(title_delete)
+  ng_word.append(text_validation)
   # NGワード読み込みおわり
 
   search_number = EditBox3.get()
-  try:
-
-    # 前回データ削除はじまり
-    tree.delete(*tree.get_children())
-    path = './images'
-    save.Delete_data()
-    try:
-      shutil.rmtree(path)
-      os.mkdir(path)
-    except FileNotFoundError:
-      os.mkdir(path)
-    # 前回データ削除終わり
-
-    # Amazonからデータ取得はじまり
-    search = get_page.get_data(search_url, int(search_number), combo_stock.get(), prime.get(), combo_review.get(), together.get(), *text_validation)
-    messagebox.showinfo('報告', search)
-    # Amazonからデータ取得おわり
-
-    #レコード取得はじまり
-    db_datas = save.Get_sql()
-    p = 1
-    for row in db_datas:
-      tree.insert("","end", tags=p, values=(p,row[1],row[3],row[4]))
-      if p & 1:
-        tree.tag_configure(p,background="#DDDDDD")
-      p += 1
-    #レコード取得おわり
-
-  except ValueError:
-    messagebox.showinfo('エラー', '数字を入力してください')
+  if float(search_number) <= 0:
+    messagebox.showinfo('エラー', '1以上を入力してください')
     EditBox2.delete(0,tk.END)
     EditBox3.delete(0,tk.END)
+  else:
+    try:
+      # 前回データ削除はじまり
+      tree.delete(*tree.get_children())
+      path = './images'
+      save.Delete_data()
+      try:
+        shutil.rmtree(path)
+        os.mkdir(path)
+      except FileNotFoundError:
+        os.mkdir(path)
+      # 前回データ削除終わり
+
+      # Amazonからデータ取得はじまり
+      search = get_page.get_data(search_url, int(search_number), combo_stock.get(), prime.get(), combo_review.get(), together.get(), *ng_word)
+      messagebox.showinfo('報告', search)
+      # Amazonからデータ取得おわり
+
+      #レコード取得はじまり
+      db_datas = save.Get_sql()
+      p = 1
+      for row in db_datas:
+        tree.insert("","end", tags=p, values=(p,row[1],row[3],row[4]))
+        if p & 1:
+          tree.tag_configure(p,background="#DDDDDD")
+        p += 1
+      #レコード取得おわり
+
+    except ValueError:
+      messagebox.showinfo('エラー', '数字を入力してください')
+      EditBox2.delete(0,tk.END)
+      EditBox3.delete(0,tk.END)
 
 
 

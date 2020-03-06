@@ -3,7 +3,7 @@ import time
 from bs4 import BeautifulSoup
 from requests_html import HTMLSession
 
-def Get_text(d_soup, *ng_words_text):
+def Get_text(d_soup, *ng_words_text):  
   texts=""
   k = 0
   review_boxs = d_soup.select(".a-unordered-list.a-vertical.a-spacing-none", recursive=False)

@@ -14,7 +14,7 @@ sys.path.append('../')
 from save_data import save
 
 
-def get_data(url, search_number, minimum_stock, prime_check, minimum_review, together_check, *ng_text):
+def get_data(url, search_number, minimum_stock, prime_check, minimum_review, together_check, *ng_word):
   k = 1
   num = 0
   check = ""
@@ -43,11 +43,22 @@ def get_data(url, search_number, minimum_stock, prime_check, minimum_review, tog
           except IndexError:
             float_review = 0.0
 
-          if prime_check == True and len(data.select(".aok-relative.s-icon-text-medium.s-prime", recursive=False)) != 0 and float_review >= float(minimum_review) and stock >= int(minimum_stock) and buying_together == False:
-            Detail_page(k, page_url, minimum_stock, *ng_text)
+          try:
+            index_title = data.select(".a-size-base-plus.a-color-base.a-text-normal", recursive=False)[0].get_text()
+            for ng_title in ng_word[0]:
+              if ng_title in index_title:
+                title_path = False
+                break
+              else:
+                title_path = True
+          except IndexError:
+            title_path = True
+
+          if prime_check == True and len(data.select(".aok-relative.s-icon-text-medium.s-prime", recursive=False)) != 0 and float_review >= float(minimum_review) and stock >= int(minimum_stock) and buying_together == False and title_path == True:
+            Detail_page(k, page_url, minimum_stock, *ng_word)
             time.sleep(0.3)
-          elif prime_check == False and float_review >= float(minimum_review) and stock >= int(minimum_stock) and buying_together == False:
-            Detail_page(k, page_url, minimum_stock, *ng_text)
+          elif prime_check == False and float_review >= float(minimum_review) and stock >= int(minimum_stock) and buying_together == False and title_path == True:
+            Detail_page(k, page_url, minimum_stock, *ng_word)
             time.sleep(0.3)
           else:
             pass
@@ -72,7 +83,7 @@ def get_data(url, search_number, minimum_stock, prime_check, minimum_review, tog
       
 
 
-def Detail_page(nomber, url ,minimum_stock, *ng_text):
+def Detail_page(nomber, url ,minimum_stock, *ng_word):
   session = HTMLSession()
   d_r = session.get(url)
   d_soup = BeautifulSoup(d_r.content, "html.parser")
@@ -90,7 +101,7 @@ def Detail_page(nomber, url ,minimum_stock, *ng_text):
       print(url)
       pass
     else:
-      title = get_title.Get_title(d_soup)
+      title = get_title.Get_title(d_soup, *ng_word)
       if title == "情報なし":
         print("03")
         print(url)
@@ -108,7 +119,7 @@ def Detail_page(nomber, url ,minimum_stock, *ng_text):
             print(url)
             pass
           else: 
-            text = get_text.Get_text(d_soup, *ng_text)
+            text = get_text.Get_text(d_soup, *ng_word[3])
             if text == "情報なし":
               print("06")
               print(url)
