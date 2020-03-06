@@ -43,13 +43,21 @@ def get_data(url, search_number, minimum_stock, prime_check, minimum_review, tog
           except IndexError:
             float_review = 0.0
 
-          index_title = data.select(".a-size-base-plus.a-color-base.a-text-normal", recursive=False)[0].get_text()
-          print(index_title)
+          try:
+            index_title = data.select(".a-size-base-plus.a-color-base.a-text-normal", recursive=False)[0].get_text()
+            for ng_title in ng_word[0]:
+              if ng_title in index_title:
+                title_path = False
+                break
+              else:
+                title_path = True
+          except IndexError:
+            title_path = True
 
-          if prime_check == True and len(data.select(".aok-relative.s-icon-text-medium.s-prime", recursive=False)) != 0 and float_review >= float(minimum_review) and stock >= int(minimum_stock) and buying_together == False:
+          if prime_check == True and len(data.select(".aok-relative.s-icon-text-medium.s-prime", recursive=False)) != 0 and float_review >= float(minimum_review) and stock >= int(minimum_stock) and buying_together == False and title_path == True:
             Detail_page(k, page_url, minimum_stock, *ng_word[3])
             time.sleep(0.3)
-          elif prime_check == False and float_review >= float(minimum_review) and stock >= int(minimum_stock) and buying_together == False:
+          elif prime_check == False and float_review >= float(minimum_review) and stock >= int(minimum_stock) and buying_together == False and title_path == True:
             Detail_page(k, page_url, minimum_stock, *ng_word[3])
             time.sleep(0.3)
           else:
