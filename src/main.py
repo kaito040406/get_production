@@ -53,45 +53,45 @@ def GetValueSearchConditions(event):
   ng_word.append(title_space)
   ng_word.append(title_delete)
   ng_word.append(text_validation)
-  # title_validation_num = len(title_validation)
-  # title_space_num = len(title_space)
-  # title_delete = len(title_delete)
-  # text_validation_count = len(text_validation)
   # NGワード読み込みおわり
 
   search_number = EditBox3.get()
-  try:
-
-    # 前回データ削除はじまり
-    tree.delete(*tree.get_children())
-    path = './images'
-    save.Delete_data()
-    try:
-      shutil.rmtree(path)
-      os.mkdir(path)
-    except FileNotFoundError:
-      os.mkdir(path)
-    # 前回データ削除終わり
-
-    # Amazonからデータ取得はじまり
-    search = get_page.get_data(search_url, int(search_number), combo_stock.get(), prime.get(), combo_review.get(), together.get(), *ng_word)
-    messagebox.showinfo('報告', search)
-    # Amazonからデータ取得おわり
-
-    #レコード取得はじまり
-    db_datas = save.Get_sql()
-    p = 1
-    for row in db_datas:
-      tree.insert("","end", tags=p, values=(p,row[1],row[3],row[4]))
-      if p & 1:
-        tree.tag_configure(p,background="#DDDDDD")
-      p += 1
-    #レコード取得おわり
-
-  except ValueError:
-    messagebox.showinfo('エラー', '数字を入力してください')
+  if float(search_number) <= 0:
+    messagebox.showinfo('エラー', '1以上を入力してください')
     EditBox2.delete(0,tk.END)
     EditBox3.delete(0,tk.END)
+  else:
+    try:
+      # 前回データ削除はじまり
+      tree.delete(*tree.get_children())
+      path = './images'
+      save.Delete_data()
+      try:
+        shutil.rmtree(path)
+        os.mkdir(path)
+      except FileNotFoundError:
+        os.mkdir(path)
+      # 前回データ削除終わり
+
+      # Amazonからデータ取得はじまり
+      search = get_page.get_data(search_url, int(search_number), combo_stock.get(), prime.get(), combo_review.get(), together.get(), *ng_word)
+      messagebox.showinfo('報告', search)
+      # Amazonからデータ取得おわり
+
+      #レコード取得はじまり
+      db_datas = save.Get_sql()
+      p = 1
+      for row in db_datas:
+        tree.insert("","end", tags=p, values=(p,row[1],row[3],row[4]))
+        if p & 1:
+          tree.tag_configure(p,background="#DDDDDD")
+        p += 1
+      #レコード取得おわり
+
+    except ValueError:
+      messagebox.showinfo('エラー', '数字を入力してください')
+      EditBox2.delete(0,tk.END)
+      EditBox3.delete(0,tk.END)
 
 
 
