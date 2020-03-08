@@ -97,7 +97,7 @@ def GetValueSearchConditions(event):
 
 def Export_csv(event):
   getting_data =  save.Get_sql()
-  root.filename =  filedialog.asksaveasfilename(initialdir = "/",title = "Save as",filetypes =  [("text file","*.csv")])
+  root.filename =  filedialog.asksaveasfilename(initialfile="サンプル" ,initialdir = "/",title = "Save as",filetypes =  [("text file","*.csv")])
   with open(root.filename, 'w') as f:
     print("no." + "," +"ASIN" + "," + "title" + "," + "price" + "," + "url" + "," +"在庫数" + "," + "説明", file=f)
     p = 1
