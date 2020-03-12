@@ -10,6 +10,7 @@ from .get_param import get_title
 from .get_param import get_price
 from .get_param import get_image
 from .get_param import get_text
+from .get_param import get_category
 sys.path.append('../')
 from save_data import save
 
@@ -125,7 +126,12 @@ def Detail_page(nomber, url ,minimum_stock, *ng_word):
               print(url)
               pass
             else:
-              save.Save_data(nomber, asin, url, title, price, image, quantity, text)
+              category = get_category.Get_category(d_soup)
+              if category == "情報なし":
+                print("07")
+                print(url)
+              else:
+                save.Save_data(nomber, asin, url, title, price, image, quantity, text, category)
   #以上データ取得
     
   time.sleep(0.2)
