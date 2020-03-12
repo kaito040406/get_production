@@ -11,6 +11,7 @@ from .get_param import get_price
 from .get_param import get_image
 from .get_param import get_text
 from .get_param import get_category
+from .get_param import get_maker
 sys.path.append('../')
 from save_data import save
 
@@ -131,7 +132,12 @@ def Detail_page(nomber, url ,minimum_stock, *ng_word):
                 print("07")
                 print(url)
               else:
-                save.Save_data(nomber, asin, url, title, price, image, quantity, text, category)
+                maker = get_maker.Get_category(d_soup)
+                if maker == "情報なし":
+                  print("08")
+                  print(url)
+                else:
+                  save.Save_data(nomber, asin, url, title, price, image, quantity, text, category, maker)
   #以上データ取得
     
   time.sleep(0.2)

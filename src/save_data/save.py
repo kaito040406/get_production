@@ -31,12 +31,12 @@ def Save_title():
     pass
 
 
-def Save_data(number, asin, url, title, price, image, quentity, text, category):
+def Save_data(number, asin, url, title, price, image, quentity, text, category, maker):
   c = sqlite3.connect(dbname)
   sql_insert = """
-  insert into production (asin, url, title, price, image01, quentity, text, category) values (?, ?, ?, ?, ?, ?, ?, ?);
+  insert into production (asin, url, title, price, image01, quentity, text, category, maker) values (?, ?, ?, ?, ?, ?, ?, ?, ?);
   """
-  insert_list = (asin, url, title, price, image, quentity, text, category)
+  insert_list = (asin, url, title, price, image, quentity, text, category, maker)
   c.execute(sql_insert, insert_list)
   c.commit()
   c.close()
