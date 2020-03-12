@@ -36,7 +36,7 @@ def Out_csv(*output_data):
   auto_extension = "はい"
   early_termination = "はい"
   price_reduction_negotiations = "いいえ"
-  automatic_relisting = 3
+  automatic_relisting = "3"
   automatic_price_cut = "いいえ"
   automatic_price_reduction_rate = ""
   bold = "いいえ"
@@ -59,14 +59,14 @@ def Out_csv(*output_data):
 
   bland_check = False
   
-  test_ct = "家電＆カメラ ? カメラ ? デジタルカメラ ? デジタル一眼 ? ミラーレス一眼"
+  # test_ct = "家電＆カメラ ? カメラ ? デジタルカメラ ? デジタル一眼 ? ミラーレス一眼"
   with open("category.csv") as f:
     reader = csv.reader(f)
     for row in output_data:
       for check in reader:
         # 本来は以下
-        # if str(row[8]) + str(row[9]) == check[5]:
-        if test_ct == check[5]:
+        if str(row[8]) + str(row[9]) == check[5]:
+        # if test_ct == check[5]:
           bland_check = True
           ct_id.append(check[0])
           title.append(row[3])
@@ -131,8 +131,8 @@ def Out_csv(*output_data):
       for row in output_data:
         for check in reader:
           # 本来は以下
-          # if str(row[8]) == check[5]:
-          if test_ct == check[5]:
+          if str(row[8]) == check[5]:
+          # if test_ct == check[5]:
             bland_check = True
             ct_id.append(check[0])
             title.append(row[3])
@@ -193,7 +193,10 @@ def Out_csv(*output_data):
                           ,afi
                           ,befor_check
                         )
-      f.close()      
-    return return_data
+    f.close()
+    if len(return_data) == 0:
+      return "情報なし"
+    else:     
+      return return_data
       
       
