@@ -132,7 +132,7 @@ def Detail_page(nomber, url ,minimum_stock, *ng_word):
                 print("07")
                 print(url)
               else:
-                maker = get_maker.Get_category(d_soup)
+                maker = get_maker.Get_maker(d_soup)
                 if maker == "情報なし":
                   print("08")
                   print(url)
