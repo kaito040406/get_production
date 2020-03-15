@@ -66,6 +66,7 @@ def get_data(url, search_number, minimum_stock, prime_check, minimum_review, tog
             pass
 
           time.sleep(0.2)
+         
           k = k + 1
         check = page_url 
       except IndexError:
