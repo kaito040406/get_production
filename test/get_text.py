@@ -10,8 +10,6 @@ ng_words = []
 i = 0
 texts = ""
 
-
-
 k = 0
 session = HTMLSession()
 r = session.get(url)

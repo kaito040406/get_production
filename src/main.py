@@ -8,6 +8,7 @@ from save_data import save
 import shutil
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
+from output_csv import output_csv
 import chromedriver_binary
 import csv
 import datetime
@@ -97,16 +98,27 @@ def GetValueSearchConditions(event):
 
 
 def Export_csv(event):
-  now = datetime.datetime.now().strftime('%Y%m%d%H%M')
   getting_data =  save.Get_sql()
-  root.filename =  filedialog.asksaveasfilename(initialfile=str(now) ,initialdir = "/",title = "Save as",filetypes =  [("text file","*.csv")])
-  with open(root.filename, 'w') as f:
-    print("no." + "," +"ASIN" + "," + "title" + "," + "price" + "," + "url" + "," +"在庫数" + "," + "説明", file=f)
-    p = 1
-    for row in getting_data:
-      print(str(p) + "," + row[1] + "," + row[3] + "," + row[4] + "," + row[2] + "," + str(row[6]) + "," + row[7] , file=f)
-      p += 1
-    f.close()
+  save_check = output_csv.Out_csv(root, *getting_data)
+  # 
+  # out_putdata = output_csv.Out_csv(root ,*getting_data)
+  # if out_putdata == "情報なし":
+  #   messagebox.showinfo('エラー', '出力できるデータはありません')
+  # else:
+  #   now = datetime.datetime.now().strftime('%Y%m%d%H%M')
+  #   root.filename =  filedialog.asksaveasfilename(initialfile=str(now) ,initialdir = "/",title = "Save as",filetypes =  [("text file","*.csv")])
+  #   with open(root.filename, 'w') as f:
+  #     print("カテゴリ" + "," +"タイトル" + "," + "説明" + "," + "開始価格" + "," + "即決価格" + "," +"個数" + "," + "開催期間" + "," + "終了期間" + "," + "画像１" + "," + "画像２" + "," + "画像３" + "," + "商品発送元の都道府県" + "," + "送料負担" + "," + "代金支払い" + "," + "Yahoo!かんたん決済" + "," + "銀行振込" + "," + "かんたん取引" + "," + "銀行ID" + "," + "銀行名１" + "," + "現金書留" + "," + "商品代引" + "," + "商品の状態" + "," + "返品の可否" + "," + "入札者評価制限" + "," + "自動延長" + "," + "早期終了" + "," + "値下げ交渉" + "," + "自動再出品" + "," + "自動値下げ" + "," + "自動値下げ価格変動率" + "," + "太字テキスト" + "," + "背景色" + "," + "贈答品アイコン" + "," + "送料固定" + "," + "ネコポス" + "," + "ネコ宅急便コンパクト" + "," + "ネコ宅急便" + "," + "ゆうパケット" + "," + "ゆうパック" + "," + "はこBOON" + "," + "はこBOONmini" + "," + "発送までの日数" + "," + "発送方法１" + "," + "発送方法１全国一律価格" + "," + "受け取り後決済サービス" + "," + "海外発送" + "," + "アフィリエイト" + "," + "出品者情報開示前チェック", file=f)
+  #     p = 1
+  #     for row in out_putdata:
+  #       print("OK1")
+  #       print(len(row))
+  #       print("OK2")
+  #       print(row[0] + "," + row[1] + "," + row[2] + "," + row[3] + "," + row[4] + "," + row[5] + "," + row[6] + "," + row[7] + "," + row[8] + "," + row[9] + "," + row[10] + "," + row[11] + "," + row[12] + "," + row[13] + "," + row[14] + "," + row[15] + "," + row[16] + "," + row[17] + "," + row[18] + "," + row[19] + "," + row[20] + "," + row[21] + "," + row[22] + "," + row[23] + "," + row[24] + "," + row[25] + "," + row[26] + "," + row[27] + "," + row[28] + "," + row[29] + "," + row[30] + "," + row[31] + "," + row[32] + "," + row[33] + "," + row[34] + "," + row[35] + "," + row[36] + "," + row[37] + "," + row[38] + "," + row[39] + "," + row[40] + "," + row[41] + "," + row[42] + "," + row[43] + "," + row[44] + "," + row[45] + "," + row[46] + "," + row[47] + "," + row[48] + "," + row[49] , file=f)
+  #       # print(str(p) + "," + row[1] + "," + row[3] + "," + row[4] + "," + row[2] + "," + str(row[6]) + "," + row[7] , file=f)
+  #       p += 1
+  #     f.close()
+  #     # ０から４９
 
 
 
