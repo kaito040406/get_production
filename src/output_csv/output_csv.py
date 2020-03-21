@@ -8,21 +8,6 @@ dbname = "production.db"
 
 def Out_csv(root, *output_data):
   output_data = []
- 
-
-  bland_check = False
-  i = 0
-  k = 0
-  check_data = []
-  with open("category.csv") as f:
-    reader = csv.reader(f)
-    for check in reader:
-      check_data.append(check)
-    f.close()
-
-
-  for row in output_data:
-    i=i+1
     return_data = []
     ct_id = []
     title = []
@@ -73,6 +58,22 @@ def Out_csv(root, *output_data):
     abroad = []
     afi = []
     befor_check = []
+ 
+
+  bland_check = False
+  i = 0
+  k = 0
+  check_data = []
+  with open("category.csv") as f:
+    reader = csv.reader(f)
+    for check in reader:
+      check_data.append(check)
+    f.close()
+
+
+  for row in output_data:
+    i=i+1
+
     for check in check_data:
       k = k + 1
       if str(row[8]) + str(row[9]) == check[2]:
