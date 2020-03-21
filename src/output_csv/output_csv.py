@@ -130,7 +130,7 @@ def Out_csv(root, *output_data):
         afi.append("いいえ")
         befor_check.append("いいえ")
 
-        
+        return_data = []
         return_data.append(ct_id)
         return_data.append(title)
         return_data.append(text)
@@ -181,6 +181,7 @@ def Out_csv(root, *output_data):
         return_data.append(afi)
         return_data.append(befor_check)
         output_data.append(return_data)
+        
   if bland_check == False:
     for row in output_data:
       for check in check_data:
@@ -235,7 +236,7 @@ def Out_csv(root, *output_data):
           afi.append("いいえ")
           befor_check.append("いいえ")
 
-          
+          return_data = []
           return_data.append(ct_id)
           return_data.append(title)
           return_data.append(text)
@@ -286,6 +287,7 @@ def Out_csv(root, *output_data):
           return_data.append(afi)
           return_data.append(befor_check)
           output_data.append(return_data)
+          
 
   if len(return_data) == 0:
     messagebox.showinfo('エラー', '出力できるデータはありません')
