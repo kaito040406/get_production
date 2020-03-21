@@ -7,7 +7,6 @@ from tkinter import filedialog
 dbname = "production.db"
 
 def Out_csv(root, *output_data):
-  output_data = []
   return_data = []
   ct_id = []
   title = []
@@ -69,13 +68,17 @@ def Out_csv(root, *output_data):
     for check in reader:
       check_data.append(check)
     f.close()
-
+  # print(len(check_data))
+  # print(len(output_data))
 
   for row in output_data:
     i=i+1
+    # print(row[8])
 
     for check in check_data:
+      # print(check[2])
       k = k + 1
+      # print(str(row[8]) + str(row[9]) + " : " + str(check[2]))
       if str(row[8]) + str(row[9]) == check[2]:
         bland_check = True
         ct_id.append(check[0])

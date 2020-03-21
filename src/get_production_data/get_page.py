@@ -24,7 +24,6 @@ def get_data(url, search_number, minimum_stock, prime_check, minimum_review, tog
     session = HTMLSession()
     r = session.get(url)
     soup = BeautifulSoup(r.content, "html.parser")
-    print(soup)
     datas = soup.select(".s-expand-height.s-include-content-margin.s-border-bottom", recursive=False)
     for data in datas:
       url_datas = data.select(".a-link-normal.a-text-normal", recursive=False)
