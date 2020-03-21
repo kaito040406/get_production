@@ -100,7 +100,12 @@ def GetValueSearchConditions(event):
 def Export_csv(event):
   getting_data =  save.Get_sql()
   save_check = output_csv.Out_csv(root, *getting_data)
-  # 
+  if save_check == True:
+    messagebox.showinfo('完了', '正しく出力できました')
+  else:
+    messagebox.showinfo('エラー', '出力できるデータはありません')  
+  #
+  #  
   # out_putdata = output_csv.Out_csv(root ,*getting_data)
   # if out_putdata == "情報なし":
   #   messagebox.showinfo('エラー', '出力できるデータはありません')
