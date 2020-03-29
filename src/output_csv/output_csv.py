@@ -71,7 +71,6 @@ def Out_csv(root, *output_data):
 
   for row in output_data:
     i=i+1
-    print(row)
 
     for check in check_data:
       k = k + 1
@@ -239,15 +238,13 @@ def Out_csv(root, *output_data):
 
   output_data = []
   for i in range(len(return_data[0])):
-    print(len(return_data[0]))
     tmp = []
     for v in return_data:
-      print(i)
       tmp.append(v[i])
     output_data.append(tmp)
 
-
-  if len(return_data) == 0:
+  print(output_data)
+  if len(output_data) == 0:
     return False
   else:     
     now = datetime.datetime.now().strftime('%Y%m%d%H%M')
