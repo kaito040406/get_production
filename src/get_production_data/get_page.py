@@ -12,6 +12,7 @@ from .get_param import get_image
 from .get_param import get_text
 from .get_param import get_category
 from .get_param import get_maker
+from .get_param import arrive
 sys.path.append('../')
 from save_data import save
 
@@ -32,19 +33,23 @@ def get_data(url, search_number, minimum_stock, prime_check, minimum_review, tog
         page_url = "https://www.amazon.co.jp/"+url
         if page_url != check:
 
+          # 在庫調査
           stock = data_filter.Get_quantity_indexPage(data)
           
+          # 合わせ買い調査
           if together_check == True:
             buying_together = data_filter.Buying_together(data)
           else:
             buying_together = False
 
+          # レビュー調査
           try:
             review = data.select(".a-icon-alt", recursive=False)[0].get_text()[-3:]
             float_review = float(review)
           except IndexError:
             float_review = 0.0
 
+          #  NGワード調査
           try:
             index_title = data.select(".a-size-base-plus.a-color-base.a-text-normal", recursive=False)[0].get_text()
             for ng_title in ng_word[0]:
@@ -56,10 +61,13 @@ def get_data(url, search_number, minimum_stock, prime_check, minimum_review, tog
           except IndexError:
             title_path = True
 
-          if prime_check == True and len(data.select(".aok-relative.s-icon-text-medium.s-prime", recursive=False)) != 0 and float_review >= float(minimum_review) and stock >= int(minimum_stock) and buying_together == False and title_path == True:
+          # リードタイム取得
+          arrive_time = arrive.Get_arrive(data)
+
+          if prime_check == True and len(data.select(".aok-relative.s-icon-text-medium.s-prime", recursive=False)) != 0 and float_review >= float(minimum_review) and stock >= int(minimum_stock) and buying_together == False and title_path == True arrive_time == True:
             Detail_page(k, page_url, minimum_stock, *ng_word)
             time.sleep(0.3)
-          elif prime_check == False and float_review >= float(minimum_review) and stock >= int(minimum_stock) and buying_together == False and title_path == True:
+          elif prime_check == False and float_review >= float(minimum_review) and stock >= int(minimum_stock) and buying_together == False and title_path == True arrive_time == True:
             Detail_page(k, page_url, minimum_stock, *ng_word)
             time.sleep(0.3)
           else:
