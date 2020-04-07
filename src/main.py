@@ -12,9 +12,79 @@ from output_csv import output_csv
 import chromedriver_binary
 import csv
 import datetime
+from PIL import Image, ImageTk
+from itertools import count
+import threading
+
+#処理画面を表示するクラス
+class ImageLabel(tk.Label):
+  running = True
+  def load(self, im):
+    if isinstance(im, str):
+      im = Image.open(im)
+    self.loc = 0
+    self.frames = []
+
+    try:
+      for i in count(1):
+        self.frames.append(ImageTk.PhotoImage(im.copy()))
+        im.seek(i)
+        self.check
+    except EOFError:
+      pass
+
+    try:
+      self.delay = im.info['duration']
+    except:
+      self.delay = 100
+
+    if len(self.frames) == 1:
+      self.config(image=self.frames[0])
+    else:
+      self.next_frame()
+
+  def unload(self):
+    self.config(image=None)
+    self.frames = None
+
+  def next_frame(self):
+    if self.frames:
+      self.loc += 1
+      self.loc %= len(self.frames)
+      self.config(image=self.frames[self.loc])
+      self.after(self.delay, self.next_frame)
+
+  def check(self):
+    if self.running:
+      pass
+    else:
+      self.destroy()
+  def stop(self):
+    self.running = False
+
+
+class gif_controller:
+  def make_gif(self):
+    print("ok")
+    messagebox.showinfo('実行', '実行しますか？')
+    canvas = tk.Canvas(width=800, height=800, background="white")
+    canvas.place(x=0, y=0)
+    text = tk.Label(root, text=u'取得中',font=(u'ＭＳ ゴシック', 28))
+    text.place(x=370,y=300)
+    lbl = ImageLabel(root)
+    lbl.pack()
+    lbl.place(x=350,y=100)
+    lbl.load('Preloader_8.gif')
+  
+  def stop(self):
+    ImageLabel().stop
 
 
 def GetValueSearchConditions(event):
+  #処理中画面表示
+  gif = gif_controller()
+  thread = threading.Thread(target=gif.make_gif)
+  thread.start()
 
   # ブラウザ操作
   options = Options()
@@ -79,6 +149,10 @@ def GetValueSearchConditions(event):
       search = get_page.get_data(search_url, int(search_number), combo_stock.get(), prime.get(), combo_review.get(), together.get(), *ng_word)
       messagebox.showinfo('報告', search)
       # Amazonからデータ取得おわり
+
+      # gif消去始まり
+      ImageLabel().stop
+      # gif消去終わり
 
       #レコード取得はじまり
       db_datas = save.Get_sql()
