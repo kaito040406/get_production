@@ -12,9 +12,16 @@ from output_csv import output_csv
 import chromedriver_binary
 import csv
 import datetime
+from gif import gif_controller  
+import threading
+import concurrent.futures
+
+
 
 
 def GetValueSearchConditions(event):
+
+
 
   # ブラウザ操作
   options = Options()
@@ -80,6 +87,8 @@ def GetValueSearchConditions(event):
       messagebox.showinfo('報告', search)
       # Amazonからデータ取得おわり
 
+      
+
       #レコード取得はじまり
       db_datas = save.Get_sql()
       p = 1
@@ -89,6 +98,13 @@ def GetValueSearchConditions(event):
           tree.tag_configure(p,background="#DDDDDD")
         p += 1
       #レコード取得おわり
+
+
+      # gif消去始まり
+      # gif.stop()
+      # executor.submit(gif.stop())
+      # canvas.destroy()
+      # gif消去終わり
 
     except ValueError:
       messagebox.showinfo('エラー', '数字を入力してください')
@@ -104,6 +120,29 @@ def Export_csv(event):
     messagebox.showinfo('完了', '正しく出力できました')
   else:
     messagebox.showinfo('エラー', '出力できるデータはありません')  
+
+# def test(event):
+#   #処理中画面表示
+#   root2 = tk.Tk()
+#   root2.title(u"Get Production")
+#   root2.geometry("800x1000")
+#   root2.configure(bg='#CCFFCC')
+#   # executor = concurrent.futures.ThreadPoolExecutor(max_workers=2)
+#   gif = gif_controller()
+#   # thread = threading.Thread(target=gif.make_gif)
+#   # canvas = tk.Canvas(root, width=800, height=800, background="white")
+#   # canvas.place(x=0, y=0)
+#   # canvas.mainloop()
+#   # executor.submit(gif.make_gif(root))
+#   gif.make_gif(root2)
+#   root2.mainloop()
+#   # time.sleep(20)
+#   # print(a)
+#   # GetValueSearchConditions()
+#   # thread.start()
+#   # gif.make_gif()
+#   #処理中画面表示終わり
+
 
 
 
@@ -157,6 +196,7 @@ Button = tk.Button(root, text=u'実行', fg='#333333', height=2, width=10)
 Button.config(bg='red')
 Button.bind("<Button-1>",GetValueSearchConditions)
 Button.place(x=550, y=200)
+
 
 Button_export = tk.Button(root, text=u'エクスポート', fg='#333333', height=1, width=10)
 Button_export.config(bg='red')

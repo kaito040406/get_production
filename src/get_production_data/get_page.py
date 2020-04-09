@@ -81,7 +81,8 @@ def get_data(url, search_number, minimum_stock, prime_check, minimum_review, tog
         pass
 
       if k == search_number + 1:
-        return "end"
+        #return "end"
+        return True
 
     try:
       next_page = soup.select(".a-last", recursive=False)
@@ -90,7 +91,8 @@ def get_data(url, search_number, minimum_stock, prime_check, minimum_review, tog
       url = "https://www.amazon.co.jp/" + next_page_url
       time.sleep(0.2)
     except AttributeError:
-      return "end"
+      #return "end"
+      return True
       
 
 
