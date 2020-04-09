@@ -12,79 +12,16 @@ from output_csv import output_csv
 import chromedriver_binary
 import csv
 import datetime
-from PIL import Image, ImageTk
-from itertools import count
+from gif import gif_controller  
 import threading
-
-#処理画面を表示するクラス
-class ImageLabel(tk.Label):
-  running = True
-  def load(self, im):
-    if isinstance(im, str):
-      im = Image.open(im)
-    self.loc = 0
-    self.frames = []
-
-    try:
-      for i in count(1):
-        self.frames.append(ImageTk.PhotoImage(im.copy()))
-        im.seek(i)
-        self.check
-    except EOFError:
-      pass
-
-    try:
-      self.delay = im.info['duration']
-    except:
-      self.delay = 100
-
-    if len(self.frames) == 1:
-      self.config(image=self.frames[0])
-    else:
-      self.next_frame()
-
-  def unload(self):
-    self.config(image=None)
-    self.frames = None
-
-  def next_frame(self):
-    if self.frames:
-      self.loc += 1
-      self.loc %= len(self.frames)
-      self.config(image=self.frames[self.loc])
-      self.after(self.delay, self.next_frame)
-
-  def check(self):
-    if self.running:
-      pass
-    else:
-      self.destroy()
-  def stop(self):
-    self.running = False
+import concurrent.futures
 
 
-class gif_controller:
-  def make_gif(self):
-    print("ok")
-    messagebox.showinfo('実行', '実行しますか？')
-    canvas = tk.Canvas(width=800, height=800, background="white")
-    canvas.place(x=0, y=0)
-    text = tk.Label(root, text=u'取得中',font=(u'ＭＳ ゴシック', 28))
-    text.place(x=370,y=300)
-    lbl = ImageLabel(root)
-    lbl.pack()
-    lbl.place(x=350,y=100)
-    lbl.load('Preloader_8.gif')
-  
-  def stop(self):
-    ImageLabel().stop
 
 
 def GetValueSearchConditions(event):
-  #処理中画面表示
-  gif = gif_controller()
-  thread = threading.Thread(target=gif.make_gif)
-  thread.start()
+
+
 
   # ブラウザ操作
   options = Options()
@@ -150,9 +87,7 @@ def GetValueSearchConditions(event):
       messagebox.showinfo('報告', search)
       # Amazonからデータ取得おわり
 
-      # gif消去始まり
-      ImageLabel().stop
-      # gif消去終わり
+      
 
       #レコード取得はじまり
       db_datas = save.Get_sql()
@@ -163,6 +98,13 @@ def GetValueSearchConditions(event):
           tree.tag_configure(p,background="#DDDDDD")
         p += 1
       #レコード取得おわり
+
+
+      # gif消去始まり
+      # gif.stop()
+      # executor.submit(gif.stop())
+      # canvas.destroy()
+      # gif消去終わり
 
     except ValueError:
       messagebox.showinfo('エラー', '数字を入力してください')
@@ -178,6 +120,29 @@ def Export_csv(event):
     messagebox.showinfo('完了', '正しく出力できました')
   else:
     messagebox.showinfo('エラー', '出力できるデータはありません')  
+
+# def test(event):
+#   #処理中画面表示
+#   root2 = tk.Tk()
+#   root2.title(u"Get Production")
+#   root2.geometry("800x1000")
+#   root2.configure(bg='#CCFFCC')
+#   # executor = concurrent.futures.ThreadPoolExecutor(max_workers=2)
+#   gif = gif_controller()
+#   # thread = threading.Thread(target=gif.make_gif)
+#   # canvas = tk.Canvas(root, width=800, height=800, background="white")
+#   # canvas.place(x=0, y=0)
+#   # canvas.mainloop()
+#   # executor.submit(gif.make_gif(root))
+#   gif.make_gif(root2)
+#   root2.mainloop()
+#   # time.sleep(20)
+#   # print(a)
+#   # GetValueSearchConditions()
+#   # thread.start()
+#   # gif.make_gif()
+#   #処理中画面表示終わり
+
 
 
 
@@ -231,6 +196,11 @@ Button = tk.Button(root, text=u'実行', fg='#333333', height=2, width=10)
 Button.config(bg='red')
 Button.bind("<Button-1>",GetValueSearchConditions)
 Button.place(x=550, y=200)
+
+Button2 = tk.Button(root, text=u'テスト', fg='#333333', height=2, width=10)
+Button2.config(bg='red')
+Button2.bind("<Button-1>",test)
+Button2.place(x=350, y=200)
 
 Button_export = tk.Button(root, text=u'エクスポート', fg='#333333', height=1, width=10)
 Button_export.config(bg='red')

@@ -1,0 +1,55 @@
+<!DOCUMENT html>
+<html>
+  <head>
+    <meta chaset="UTF-8" />
+    <script type="text/javascript" src="js/index.js"></script>
+    <title>Get_production</title>
+  </head>
+  <body>
+    <form name="form">
+      <br />
+      <span>
+        検索ワード <input id="search_ward" type="text" /s>
+      </span>
+      <br />
+      <span>
+        取得件数
+        <input id="members" type="text" />
+      </span>
+      <br />
+      <span>
+        最低在庫数
+        <select id="counts" size="1">
+          <option value="5">5個</option>
+          <option value="6">6個</option>
+          <option value="7">7個</option>
+          <option value="8">8個</option>
+          <option value="9">9個</option>
+          <option value="10">10個</option>
+        </select>
+      </span>
+      <br />
+      <span>
+        primeのみ取得
+        <input type="checkbox" id="prime" value="1" checked="checked" />
+      </span>
+      <br />
+      <span>
+        合わせ買いブロック
+        <input type="checkbox" id="w_buy" value="1" checked="checked" />
+      </span>
+    </form>
+    <button type="button" id="submit_button">
+      <span>実行</span>
+    </button>
+
+    <table bordercolor="black" class="table" id="table">
+      <tr>
+        <th>No.</th>
+        <th>ASIN</th>
+        <th>タイトル</th>
+        <th>金額</th>
+      </tr>
+    </table>
+  </body>
+</html>
