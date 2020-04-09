@@ -56,11 +56,26 @@ def start(search_word, search_number, stock, review, prime, together):
     # 前回データ削除終わり
 
     #Amazonからデータ取得
-    search = get_page.get_data(search_url, int(search_number), int(stock), prime, int(review), together, *ng_word)
+    search = get_page.get_data(search_url, int(search_number), int(stock), prime, float(review), together, *ng_word)
     #Amazonからデータ取得終わり
-
     return search
 
+
+@eel.expose
+def tabele():
+  data = []
+  record = []
+  db_datas = save.Get_sql()
+  p = 1;
+  for row in db_datas:
+    record.append(p)
+    record.append(row[1])
+    record.append(row[3])
+    record.append(row[4])
+    data.append(record)
+    p = p + 1
+    record = []
+  return data
 
 
 eel.init("web")
