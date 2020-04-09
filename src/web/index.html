@@ -2,12 +2,13 @@
 <html>
   <head>
     <meta chaset="UTF-8" />
+    <script type="text/javascript" src="eel.js"></script>
     <script type="text/javascript" src="js/index.js"></script>
     <title>Get_production</title>
   </head>
   <body>
     <form name="form">
-      <br />
+      <div class="error_message_box" id="error_message_box"></div>
       <span>
         検索ワード <input id="search_ward" type="text" /s>
       </span>
@@ -26,6 +27,17 @@
           <option value="8">8個</option>
           <option value="9">9個</option>
           <option value="10">10個</option>
+        </select>
+      </span>
+      <br />
+      <span>
+        最低レビュー
+        <select id="review" size="1">
+          <option value="5">5</option>
+          <option value="4">4</option>
+          <option value="3">3</option>
+          <option value="2">2</option>
+          <option value="1">1</option>
         </select>
       </span>
       <br />

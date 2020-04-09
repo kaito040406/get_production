@@ -197,10 +197,6 @@ Button.config(bg='red')
 Button.bind("<Button-1>",GetValueSearchConditions)
 Button.place(x=550, y=200)
 
-Button2 = tk.Button(root, text=u'テスト', fg='#333333', height=2, width=10)
-Button2.config(bg='red')
-Button2.bind("<Button-1>",test)
-Button2.place(x=350, y=200)
 
 Button_export = tk.Button(root, text=u'エクスポート', fg='#333333', height=1, width=10)
 Button_export.config(bg='red')
