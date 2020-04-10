@@ -79,4 +79,9 @@ def tabele():
 
 
 eel.init("web")
+web_app_options = {
+	'mode': "chrome-app", #or "chrome"
+	'port': 8080,
+	'chromeFlags': ["--start-fullscreen", "--browser-startup-dialog"]
+}
 eel.start("index.html")
