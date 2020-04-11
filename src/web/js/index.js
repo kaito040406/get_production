@@ -53,42 +53,49 @@ onload = function () {
       }
       function insertz_table(data) {
         table = document.getElementById("table");
-        var targetelement = document.getElementById("end");
+        var target = document.getElementById("first");
+        // console.log(target);
         var i = 1;
         data.forEach(function (value) {
           var insert_data = document.createElement("tr");
-
           insert_data.id = "table" + String(i);
-          table.insertBefore(insert_data, table.firstChild);
+
+          var child_tr = table.appendChild(insert_data);
+          // insert_data.id = "table" + String(i);
+          // table.insertBefore(insert_data, target.nextSibling);
           var column = document.getElementById("table" + String(i));
           // targetelement = document.getElementById("table" + String(i));
 
           var nomber = document.createElement("th");
           nomber.id = "nomber" + String(i);
           nomber.textContent = value[0];
+          var child_nomber = column.appendChild(nomber);
           // column.insertBefore(nomber, column.nextSibling);
-          column.insertBefore(nomber, column.firstChild);
+          // column.insertBefore(nomber, column.firstChild);
 
           // target_nomber = document.getElementById("nomber" + String(i));
           var asin = document.createElement("th");
           asin.id = "asin" + String(i);
           asin.textContent = value[1];
+          var child_asin = column.appendChild(asin);
           // column.insertBefore(asin, target_nomber.nextSibling);
-          column.insertBefore(asin, column.firstChild);
+          // column.insertBefore(asin, column.firstChild);
 
           // target_asin = document.getElementById("asin" + String(i));
           var title = document.createElement("th");
           title.id = "title" + String(i);
           title.textContent = value[2];
+          var child_title = column.appendChild(title);
           // column.insertBefore(title, target_asin.nextSibling);
-          column.insertBefore(title, column.firstChild);
+          // column.insertBefore(title, column.firstChild);
 
           // target_title = document.getElementById("title" + String(i));
           var price = document.createElement("th");
           price.id = "price" + String(i);
           price.textContent = value[3];
+          var child_price = column.appendChild(price);
           // column.insertBefore(price, target_title.nextSibling);
-          column.insertBefore(price, column.firstChild);
+          // column.insertBefore(price, column.firstChild);
 
           i = i + 1;
         });
