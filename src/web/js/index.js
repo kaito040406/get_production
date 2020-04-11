@@ -39,7 +39,7 @@ onload = function () {
       alert("終わりました");
       if (check == true) {
         var array = await eel.tabele()();
-        console.log(array);
+        insertz_table(array);
       } else {
         var error = document.getElementById("error_message_box");
         try {
@@ -50,6 +50,48 @@ onload = function () {
         liFirst.id = "e_message";
         liFirst.textContent = "正しい情報を入力してください";
         error.insertBefore(liFirst, error.firstChild);
+      }
+      function insertz_table(data) {
+        table = document.getElementById("table");
+        var targetelement = document.getElementById("end");
+        var i = 1;
+        data.forEach(function (value) {
+          var insert_data = document.createElement("tr");
+
+          insert_data.id = "table" + String(i);
+          table.insertBefore(insert_data, table.firstChild);
+          var column = document.getElementById("table" + String(i));
+          // targetelement = document.getElementById("table" + String(i));
+
+          var nomber = document.createElement("th");
+          nomber.id = "nomber" + String(i);
+          nomber.textContent = value[0];
+          // column.insertBefore(nomber, column.nextSibling);
+          column.insertBefore(nomber, column.firstChild);
+
+          // target_nomber = document.getElementById("nomber" + String(i));
+          var asin = document.createElement("th");
+          asin.id = "asin" + String(i);
+          asin.textContent = value[1];
+          // column.insertBefore(asin, target_nomber.nextSibling);
+          column.insertBefore(asin, column.firstChild);
+
+          // target_asin = document.getElementById("asin" + String(i));
+          var title = document.createElement("th");
+          title.id = "title" + String(i);
+          title.textContent = value[2];
+          // column.insertBefore(title, target_asin.nextSibling);
+          column.insertBefore(title, column.firstChild);
+
+          // target_title = document.getElementById("title" + String(i));
+          var price = document.createElement("th");
+          price.id = "price" + String(i);
+          price.textContent = value[3];
+          // column.insertBefore(price, target_title.nextSibling);
+          column.insertBefore(price, column.firstChild);
+
+          i = i + 1;
+        });
       }
     }
   }
