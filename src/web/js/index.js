@@ -39,7 +39,7 @@ onload = function () {
       alert("終わりました");
       if (check == true) {
         var array = await eel.tabele()();
-        console.log(array);
+        insertz_table(array);
       } else {
         var error = document.getElementById("error_message_box");
         try {
@@ -50,6 +50,40 @@ onload = function () {
         liFirst.id = "e_message";
         liFirst.textContent = "正しい情報を入力してください";
         error.insertBefore(liFirst, error.firstChild);
+      }
+      function insertz_table(data) {
+        table = document.getElementById("table");
+        var target = document.getElementById("first");
+        // console.log(target);
+        var i = 1;
+        data.forEach(function (value) {
+          var insert_data = document.createElement("tr");
+          insert_data.id = "table" + String(i);
+          table.appendChild(insert_data);
+          var column = document.getElementById("table" + String(i));
+
+          var nomber = document.createElement("th");
+          nomber.id = "nomber" + String(i);
+          nomber.textContent = value[0];
+          column.appendChild(nomber);
+
+          var asin = document.createElement("th");
+          asin.id = "asin" + String(i);
+          asin.textContent = value[1];
+          column.appendChild(asin);
+
+          var title = document.createElement("th");
+          title.id = "title" + String(i);
+          title.textContent = value[2];
+          column.appendChild(title);
+
+          var price = document.createElement("th");
+          price.id = "price" + String(i);
+          price.textContent = value[3];
+          column.appendChild(price);
+
+          i = i + 1;
+        });
       }
     }
   }
