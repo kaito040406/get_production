@@ -1,0 +1,148 @@
+<html>
+  <head>
+    <meta chaset="UTF-8" />
+    <script type="text/javascript" src="eel.js"></script>
+    <script type="text/javascript" src="js/index.js"></script>
+    <title>Get_production</title>
+  </head>
+  <body>
+    <div id="gif"></div>
+    <form name="form">
+      <div class="error_message_box" id="error_message_box"></div>
+      <span> 検索ワード <input id="search_ward" type="text" s="" /> </span>
+      <br />
+      <span>
+        取得件数
+        <input id="members" type="text" />
+      </span>
+      <br />
+      <span>
+        最低在庫数
+        <select id="counts" size="1">
+          <option value="5">5個</option>
+          <option value="6">6個</option>
+          <option value="7">7個</option>
+          <option value="8">8個</option>
+          <option value="9">9個</option>
+          <option value="10">10個</option>
+        </select>
+      </span>
+      <br />
+      <span>
+        最低レビュー
+        <select id="review" size="1">
+          <option value="5">5</option>
+          <option value="4">4</option>
+          <option value="3" selected="">3</option>
+          <option value="2">2</option>
+          <option value="1">1</option>
+        </select>
+      </span>
+      <br />
+      <span>
+        primeのみ取得
+        <input type="checkbox" id="prime" value="1" checked="checked" />
+      </span>
+      <br />
+      <span>
+        合わせ買いブロック
+        <input type="checkbox" id="w_buy" value="1" checked="checked" />
+      </span>
+    </form>
+    <button type="button" id="submit_button">
+      <span>実行</span>
+    </button>
+
+    <table bordercolor="black" class="table" id="table">
+      <tbody>
+        <tr id="first">
+          <th>No.</th>
+          <th>ASIN</th>
+          <th>タイトル</th>
+          <th>金額</th>
+        </tr>
+      </tbody>
+      <tr id="table1">
+        <th id="nomber1">1</th>
+        <th id="asin1">B01MFBMX8A</th>
+        <th id="title1">
+          OSOYOO(オソヨー)電子工作基本部品セットLED5色合計100PCS金属皮膜抵抗器30種類合計600本電解コンデンサ12種類合計120本セラミックコンデンサー30種類合計300本ダイオード8種類合計100本トランジスタ17種類合計170本(電子部品セット6種類)
+        </th>
+        <th id="price1">2676</th>
+      </tr>
+      <tr id="table2">
+        <th id="nomber2">2</th>
+        <th id="asin2">B07PM35YG3</th>
+        <th id="title2">
+          NintendoSwitchJoy-Con交換部品ジョイコンコントロール左
+          右センサーアナログジョイスティック交換用尾錠ロックバックルJoy-Con用L
+          Rセンサーコントロール修理ツール付きニンテンドースイッチ対応(三種類セット)
+        </th>
+        <th id="price2">1280</th>
+      </tr>
+      <tr id="table3">
+        <th id="nomber3">3</th>
+        <th id="asin3">B079DJ8NS6</th>
+        <th id="title3">
+          歯車パーツ500g約360個セットクラフトパーツチャームギア部品DIY手芸材料飾り部品アソート福袋
+        </th>
+        <th id="price3">1999</th>
+      </tr>
+      <tr id="table4">
+        <th id="nomber4">4</th>
+        <th id="asin4">B00G7EBYNU</th>
+        <th id="title4">
+          時計屋さん 腕時計用割りピン 6mm~23mm 対応18種類各20本入り
+        </th>
+        <th id="price4">496</th>
+      </tr>
+      <tr id="table5">
+        <th id="nomber5">5</th>
+        <th id="asin5">B004TE1ARA</th>
+        <th id="title5">
+          SANEIトイレ部品手洗ロータンクボールタップ手洗いの位置が真ん中用連結ホース付きV46-X-13
+        </th>
+        <th id="price5">3370</th>
+      </tr>
+      <tr id="table6">
+        <th id="nomber6">6</th>
+        <th id="asin6">B082V7N5W6</th>
+        <th id="title6">
+          ルンバ部品800900シリーズ交換用消耗品掃除機用アクセサリーアイロボット880870871980860990対応15点セットエアロブラシエッジクリーニングブラシダストカットフィルター…(800900シリーズ15セット)
+        </th>
+        <th id="price6">1898</th>
+      </tr>
+      <tr id="table7">
+        <th id="nomber7">7</th>
+        <th id="asin7">B0026P387O</th>
+        <th id="title7">
+          フィスラー(Fissler)圧力鍋パーツ部品ゴムパッキンシルバー22cmプレミアム
+          コンフォート ビタクイック用600-000-22-795
+        </th>
+        <th id="price7">2718</th>
+      </tr>
+      <tr id="table8">
+        <th id="nomber8">8</th>
+        <th id="asin8">B07FNN6MRG</th>
+        <th id="title8">
+          メガネネジ眼鏡ネジセット眼鏡サングラス修理部品アクセサリーケース付き鼻パッドメガネ修理腕時計修理用
+        </th>
+        <th id="price8">899</th>
+      </tr>
+      <tr id="table9">
+        <th id="nomber9">9</th>
+        <th id="asin9">B075DDWN3X</th>
+        <th id="title9">メルシーポット用部品 消耗品ノズルコネクター</th>
+        <th id="price9">570</th>
+      </tr>
+      <tr id="table10">
+        <th id="nomber10">10</th>
+        <th id="asin10">B00JRO3T7G</th>
+        <th id="title10">
+          サンコー4軸式くねくねアーム(ポール取り付け用部品)MARMP192B
+        </th>
+        <th id="price10">3106</th>
+      </tr>
+    </table>
+  </body>
+</html>
