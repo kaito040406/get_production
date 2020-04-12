@@ -1,9 +1,11 @@
+#gif_box {
+  display: none;
+}
 #gif {
   position: absolute;
   width: 100%;
   height: 100%;
   background-color: rgba(255, 255, 255, 0.7);
-  display: none;
 }
 #gif_pic {
   margin: 10% 45% 0 45%;
