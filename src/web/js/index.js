@@ -2,6 +2,7 @@ onload = function () {
   document.getElementById("submit_button").onclick = function () {
     var result = confirm("実行しますか？");
     if (result) {
+      make_gif();
       data_submit();
     } else {
       alert("キャンセルされました");
@@ -87,4 +88,6 @@ onload = function () {
       }
     }
   }
+
+  function make_gif() {}
 };
