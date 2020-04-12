@@ -40,7 +40,8 @@ onload = function () {
       alert("終わりました");
       if (check == true) {
         var array = await eel.tabele()();
-        insertz_table(array);
+        delete_gif(); //処理中画面削除
+        insertz_table(array); //テーブル表示
       } else {
         var error = document.getElementById("error_message_box");
         try {
@@ -54,8 +55,6 @@ onload = function () {
       }
       function insertz_table(data) {
         table = document.getElementById("table");
-        var target = document.getElementById("first");
-        // console.log(target);
         var i = 1;
         data.forEach(function (value) {
           var insert_data = document.createElement("tr");
@@ -89,5 +88,12 @@ onload = function () {
     }
   }
 
-  function make_gif() {}
+  function make_gif() {
+    var target_elemet = document.getElementById("gif_box");
+    target_elemet.style.display = "block";
+  }
+  function delete_gif() {
+    var target_elemet = document.getElementById("gif_box");
+    target_elemet.style.display = "none";
+  }
 };
