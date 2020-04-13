@@ -96,4 +96,16 @@ onload = function () {
     var target_elemet = document.getElementById("gif_box");
     target_elemet.style.display = "none";
   }
+  document.getElementById("export_button").onclick = function () {
+    alert("ファイルを出力します");
+    cav_output();
+  };
+  async function cav_output() {
+    var csv_data = await eel.out_csv()();
+    if (csv_data == true) {
+      alert("データが正しく出力されました");
+    } else {
+      alert("出力できるデータはありません");
+    }
+  }
 };

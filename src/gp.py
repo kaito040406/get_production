@@ -7,6 +7,7 @@ import datetime
 import eel
 from chrome import get_url
 import shutil
+import tkinter as tk
 
 
 @eel.expose
@@ -76,6 +77,16 @@ def tabele():
     p = p + 1
     record = []
   return data
+
+@eel.expose
+def out_csv():
+  root = tk.Tk()
+  getting_data =  save.Get_sql()
+  save_check = output_csv.Out_csv(root, *getting_data)
+  if save_check == True:
+    return True
+  else:
+    return False
 
 
 eel.init("web")
