@@ -1,7 +1,7 @@
 import os, sys, time
 from get_production_data import get_page
 from save_data import save
-from output_csv import output_csv
+from output_csv import output_csv_eel
 import csv
 import datetime
 import eel
@@ -80,13 +80,9 @@ def tabele():
 
 @eel.expose
 def out_csv():
-  root = tk.Tk()
   getting_data =  save.Get_sql()
-  save_check = output_csv.Out_csv(root, *getting_data)
-  if save_check == True:
-    return True
-  else:
-    return False
+  return output_csv_eel.Out_csv(*getting_data)
+  
 
 
 eel.init("web")

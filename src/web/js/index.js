@@ -102,10 +102,35 @@ onload = function () {
   };
   async function cav_output() {
     var csv_data = await eel.out_csv()();
-    if (csv_data == true) {
-      alert("データが正しく出力されました");
-    } else {
+    if (csv_data.length == 0) {
       alert("出力できるデータはありません");
+    } else {
+      download(arrToCSV(csv_data), "out_put.csv");
     }
+  }
+
+  function download(data, name) {
+    const bom = "\uFEFF";
+
+    const blob = new Blob([bom, data], { type: "text/csv" });
+    const anchor = document.createElement("a");
+    anchor.download = name;
+    anchor.href = window.URL.createObjectURL(blob);
+    document.body.appendChild(anchor);
+    anchor.click();
+    anchor.parentNode.removeChild(anchor);
+  }
+
+  function arrToCSV(arr) {
+    return arr
+      .map((row) => {
+        return row.map((str) => {
+          return '"' + (str ? str.replace(/"/g, '""') : "") + '"';
+        });
+      })
+      .map((row) => {
+        return row.join(",");
+      })
+      .join("\n");
   }
 };
