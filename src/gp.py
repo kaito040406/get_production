@@ -1,12 +1,13 @@
 import os, sys, time
 from get_production_data import get_page
 from save_data import save
-from output_csv import output_csv
+from output_csv import output_csv_eel
 import csv
 import datetime
 import eel
 from chrome import get_url
 import shutil
+import tkinter as tk
 
 
 @eel.expose
@@ -76,6 +77,12 @@ def tabele():
     p = p + 1
     record = []
   return data
+
+@eel.expose
+def out_csv():
+  getting_data =  save.Get_sql()
+  return output_csv_eel.Out_csv(*getting_data)
+  
 
 
 eel.init("web")

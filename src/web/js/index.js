@@ -96,4 +96,50 @@ onload = function () {
     var target_elemet = document.getElementById("gif_box");
     target_elemet.style.display = "none";
   }
+  document.getElementById("export_button").onclick = function () {
+    alert("ファイルを出力します");
+    cav_output();
+  };
+  async function cav_output() {
+    var csv_data = await eel.out_csv()();
+    if (csv_data.length == 0) {
+      alert("出力できるデータはありません");
+    } else {
+      var now = new Date();
+      var Year = now.getFullYear();
+      var Month = now.getMonth() + 1;
+      var Day = now.getDate();
+      var Hour = now.getHours();
+      var Min = now.getMinutes();
+      var Sec = now.getSeconds();
+      var now = Year + Month + Day + Hour + Min + Sec;
+      //名前がバグる
+      download(arrToCSV(csv_data), now);
+    }
+  }
+
+  function download(data, name) {
+    const bom = "\uFEFF";
+
+    const blob = new Blob([bom, data], { type: "text/csv" });
+    const anchor = document.createElement("a");
+    anchor.download = name;
+    anchor.href = window.URL.createObjectURL(blob);
+    document.body.appendChild(anchor);
+    anchor.click();
+    anchor.parentNode.removeChild(anchor);
+  }
+
+  function arrToCSV(arr) {
+    return arr
+      .map((row) => {
+        return row.map((str) => {
+          return '"' + (str ? str.replace(/"/g, '""') : "") + '"';
+        });
+      })
+      .map((row) => {
+        return row.join(",");
+      })
+      .join("\n");
+  }
 };
