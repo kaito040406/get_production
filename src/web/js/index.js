@@ -105,7 +105,16 @@ onload = function () {
     if (csv_data.length == 0) {
       alert("出力できるデータはありません");
     } else {
-      download(arrToCSV(csv_data), "out_put.csv");
+      var now = new Date();
+      var Year = now.getFullYear();
+      var Month = now.getMonth() + 1;
+      var Day = now.getDate();
+      var Hour = now.getHours();
+      var Min = now.getMinutes();
+      var Sec = now.getSeconds();
+      var now = Year + Month + Day + Hour + Min + Sec;
+      //名前がバグる
+      download(arrToCSV(csv_data), now);
     }
   }
 
