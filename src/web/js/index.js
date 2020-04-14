@@ -112,7 +112,13 @@ onload = function () {
       var Hour = now.getHours();
       var Min = now.getMinutes();
       var Sec = now.getSeconds();
-      var now = Year + Month + Day + Hour + Min + Sec;
+      var now =
+        String(Year) +
+        String(Month) +
+        String(Day) +
+        String(Hour) +
+        String(Min) +
+        String(Sec);
       //名前がバグる
       download(arrToCSV(csv_data), now);
     }
