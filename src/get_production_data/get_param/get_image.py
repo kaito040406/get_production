@@ -22,21 +22,3 @@ def Get_images(d_soup, nomber):
           break
       time.sleep(0.1)
   return image
-
-
-
-
-# def Image_download(url, nomber):
-#   dst_path = "images/"+ "image" +str(nomber)
-#   try:
-#     with urllib.request.urlopen(url) as web_file:
-#       data = web_file.read()
-#       with open(dst_path, mode='wb') as local_file:
-#         local_file.write(data)
-#     image = "image" +str(nomber)
-#   except urllib.error.URLError as e:
-#     print(e)
-#     image = "error"
-#     pass
-  
-#   return image
