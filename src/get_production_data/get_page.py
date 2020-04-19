@@ -130,33 +130,33 @@ def Detail_page(nomber, url ,minimum_stock, *ng_word):
           print("金額バリテーション ")
           print(url)
           return False
-          else: 
-            text = get_text.Get_text(d_soup, *ng_word[3])
-            if text == "情報なし":
-              print("05")
+        else: 
+          text = get_text.Get_text(d_soup, *ng_word[3])
+          if text == "情報なし":
+            print("テキストバリテーション ")
+            print(url)
+            return False
+          else:
+            category = get_category.Get_category(d_soup)
+            if category == "情報なし":
+              print("カテゴリーバリテーション ")
               print(url)
               return False
             else:
-              category = get_category.Get_category(d_soup)
-              if category == "情報なし":
-                print("カテゴリーバリテーション ")
+              maker = get_maker.Get_maker(d_soup)
+              if maker == "情報なし":
+                print("メーカーバリテーション ")
                 print(url)
                 return False
               else:
-                maker = get_maker.Get_maker(d_soup)
-                if maker == "情報なし":
-                  print("メーカーバリテーション ")
+                image = get_image.Get_images(d_soup, nomber)
+                if image == "情報なし":
+                  print("画像バリテーション")
                   print(url)
                   return False
                 else:
-                  image = get_image.Get_images(d_soup, nomber)
-                  if image == "情報なし":
-                    print("画像バリテーション")
-                    print(url)
-                    return False
-                  else:
-                    save.Save_data(nomber, asin, url, title, price, image, quantity, text, category, maker)
-                    return True
+                  save.Save_data(nomber, asin, url, title, price, image, quantity, text, category, maker)
+                  return True
   #以上データ取得
     
   time.sleep(0.2)
