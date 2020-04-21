@@ -19,6 +19,7 @@ from save_data import save
 
 def get_data(url, search_number, minimum_stock, prime_check, minimum_review, together_check, *ng_word):
   k = 1
+  j = 1
   num = 0
   check = ""
   while num == 0: 
@@ -65,10 +66,14 @@ def get_data(url, search_number, minimum_stock, prime_check, minimum_review, tog
           arrive_time = arrive.Get_arrive(data)
 
           if prime_check == True and len(data.select(".aok-relative.s-icon-text-medium.s-prime", recursive=False)) != 0 and float_review >= float(minimum_review) and stock >= int(minimum_stock) and buying_together == False and title_path == True and arrive_time == True:
-            Detail_page(k, page_url, minimum_stock, *ng_word)
+            count_check = Detail_page(j, page_url, minimum_stock, *ng_word)
+            if count_check == True:
+              j = j + 1
             time.sleep(0.3)
           elif prime_check == False and float_review >= float(minimum_review) and stock >= int(minimum_stock) and buying_together == False and title_path == True and arrive_time == True:
-            Detail_page(k, page_url, minimum_stock, *ng_word)
+            count_check = Detail_page(j, page_url, minimum_stock, *ng_word)
+            if count_check == True:
+              j = j + 1
             time.sleep(0.3)
           else:
             pass
@@ -104,51 +109,54 @@ def Detail_page(nomber, url ,minimum_stock, *ng_word):
   #以下データ取得
   quantity = get_quantity.Get_quantity(d_soup)
   if quantity <= int(minimum_stock):
-    print("01")
+    print("在庫バリテーション ")
     print(url)
-    pass
+    return False
   else:
     asin = get_asin.Get_asin(d_soup)
     if asin == "情報なし":
-      print("02")
+      print("ASINバリテーション ")
       print(url)
-      pass
+      return False
     else:
       title = get_title.Get_title(d_soup, *ng_word)
       if title == "情報なし":
-        print("03")
+        print("タイトルバリテーション ")
         print(url)
-        pass
+        return False
       else:
         price = get_price.Get_price(d_soup)
         if price == "情報なし":
-          print("04")
+          print("金額バリテーション ")
           print(url)
-          pass
-        else:
-          image = get_image.Get_images(d_soup, nomber)
-          if image == "情報なし":
-            print("05")
+          return False
+        else: 
+          text = get_text.Get_text(d_soup, *ng_word[3])
+          if text == "情報なし":
+            print("テキストバリテーション ")
             print(url)
-            pass
-          else: 
-            text = get_text.Get_text(d_soup, *ng_word[3])
-            if text == "情報なし":
-              print("06")
+            return False
+          else:
+            category = get_category.Get_category(d_soup)
+            if category == "情報なし":
+              print("カテゴリーバリテーション ")
               print(url)
-              pass
+              return False
             else:
-              category = get_category.Get_category(d_soup)
-              if category == "情報なし":
-                print("07")
+              maker = get_maker.Get_maker(d_soup)
+              if maker == "情報なし":
+                print("メーカーバリテーション ")
                 print(url)
+                return False
               else:
-                maker = get_maker.Get_maker(d_soup)
-                if maker == "情報なし":
-                  print("08")
+                image = get_image.Get_images(d_soup, nomber)
+                if image == "情報なし":
+                  print("画像バリテーション")
                   print(url)
+                  return False
                 else:
                   save.Save_data(nomber, asin, url, title, price, image, quantity, text, category, maker)
+                  return True
   #以上データ取得
     
   time.sleep(0.2)
