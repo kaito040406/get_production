@@ -15,7 +15,7 @@ def Get_url(search_word):
   element.send_keys(search_word)
   element.submit()
   search_url = driver.current_url
-  time.sleep(0.5)
+  time.sleep(5)
   driver.quit()
   time.sleep(0.5)
   return search_url
