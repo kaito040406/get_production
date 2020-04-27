@@ -25,5 +25,5 @@ def Get_text(d_soup, *ng_words_text):
   if texts=="":
     return "情報なし"
   else:
-    return texts
+    return texts.replace(',','')
   
