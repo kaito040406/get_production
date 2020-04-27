@@ -33,7 +33,7 @@ def Out_csv(*output_data):
     start_price.append(str(int(row[4]) + 100))
     end_price_value = int(int(row[4]) + 100 + 200)
     end_price.append(str(end_price_value))
-    image1.append(str(row[6]))
+    image1.append(str(row[5]))
     sipping_price.append("780")
 
   return_data.append(ct_id)
