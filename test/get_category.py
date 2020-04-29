@@ -18,9 +18,10 @@ r = session.get(url)
 
 # d_soupにHTML全体の情報を格納
 d_soup = BeautifulSoup(r.content, "html.parser")
+print(d_soup)
 
 # 取得したHTML全体の情報の中の　.a-column.a-span6.a-spacing-base.a-ws-span6　のクラス名を含む要素を取得
 # 複数あるので、基本的に、配列で格納される
-text = d_soup.select(".a-column.a-span6.a-spacing-base.a-ws-span6", recursive=False)
+# text = d_soup.select(".a-column.a-span6.a-spacing-base.a-ws-span6", recursive=False)
 
-print(text)
+# print(text)
