@@ -2,7 +2,7 @@ import csv
 import datetime
 import sqlite3
 
-dbname = "production.db"
+dbname = "get_production/production.db"
 
 def Out_csv(*output_data):
   return_data = []
@@ -17,7 +17,7 @@ def Out_csv(*output_data):
   i = 0
   k = 0
   check_data = []
-  with open("category.csv") as f:
+  with open("get_production/category.csv") as f:
     reader = csv.reader(f)
     for check in reader:
       check_data.append(check)

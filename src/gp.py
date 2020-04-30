@@ -1,13 +1,12 @@
 import os, sys, time
-from get_production_data import get_page
-from save_data import save
-from output_csv import output_csv_eel
+import get_production_data.get_page as get_page
+import save_data.save as save
+import output_csv.output_csv_eel as output_csv_eel
 import csv
 import datetime
 import eel
-from chrome import get_url
+import chrome.get_url as get_url
 import shutil
-import tkinter as tk
 
 
 @eel.expose
@@ -27,7 +26,7 @@ def start(search_word, search_number, stock, review, prime, together):
     title_space = []
     title_delete = []
     ng_word = []
-    with open('NG_WORD.csv') as f:
+    with open('get_production/NG_WORD.csv') as f:
       reader = csv.reader(f)
       for row in reader:
         if row[0] != "":

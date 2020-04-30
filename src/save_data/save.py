@@ -4,7 +4,7 @@ import urllib.error
 import urllib.request
 
 
-dbname = "production.db"
+dbname = "get_production/production.db"
 
 def Save_title():
   c = sqlite3.connect(dbname)
@@ -61,7 +61,7 @@ def Delete_data():
 
 
 def Image_download(url, nomber):
-  dst_path = "images/"+ "image" +str(nomber)
+  dst_path = "get_production/images/"+ "image" +str(nomber)
   try:
     with urllib.request.urlopen(url) as web_file:
       data = web_file.read()

@@ -1,13 +1,12 @@
 import shutil
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
-import chromedriver_binary
+# import chromedriver_binary
 import os, sys, time
  
 def Get_url(search_word):
   # ブラウザ操作
-  options = Options()
-  driver = webdriver.Chrome(chrome_options=options)
+  driver = webdriver.Chrome("/usr/local/bin/chromedriver")
   url = "https://www.amazon.co.jp/"
   driver.get(url)
   time.sleep(3)
