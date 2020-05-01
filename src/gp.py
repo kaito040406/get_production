@@ -46,7 +46,7 @@ def start(search_word, search_number, stock, review, prime, together):
 
 
     # 前回データ削除はじまり
-    path = './images'
+    path = 'get_production/images'
     save.Delete_data()
     try:
       shutil.rmtree(path)
